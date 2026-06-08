@@ -1,0 +1,183 @@
+Visual_LandingPage_Premium_Particles = 
+"<style>html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;}</style>
+<div style=""width:100vw;height:100vh;position:relative;overflow:hidden;font-family:Inter,sans-serif;background:transparent;"">
+<div id=""p3d"" style=""position:absolute;inset:0;z-index:2;""></div>
+
+<div style=""position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:6vh;text-align:center;pointer-events:none;"">
+  
+  <div style=""font-size:clamp(9px,1vw,11px);letter-spacing:5px;text-transform:uppercase;color:#4E2680;margin-bottom:14px;opacity:0;animation:gfade 1s 0.8s forwards;"">
+    Power BI · Rethink BI
+  </div>
+  
+  <div style=""font-size:clamp(28px,5vw,62px);font-weight:700;margin-bottom:10px;opacity:0;animation:gfade 1s 1.1s forwards;line-height:1.1;"">
+    <span style=""color:#4E2680;"">Power BI Landing Page</span><br>
+    <span style=""color:#3DCBAA;"">Make it your own</span>
+  </div>
+  
+  <div style=""font-size:clamp(12px,1.3vw,16px);color:#4E2680;max-width:520px;line-height:1.8;opacity:0;animation:gfade 1s 1.4s forwards;"">
+    Redefining the Power BI Experience
+  </div>
+  
+</div>
+
+<style>
+@keyframes gfade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+</style>
+<script src=""https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js""></script>
+<script>
+function startParticles(){
+if(typeof THREE==='undefined'){setTimeout(startParticles,100);return;}
+var cont=document.getElementById('p3d');
+var w=window.innerWidth,h=window.innerHeight;
+var scene=new THREE.Scene();
+var camera=new THREE.PerspectiveCamera(75,w/h,0.1,1000);
+var renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setSize(w,h);
+renderer.setClearColor(0x000000,0);
+renderer.domElement.style.cssText='position:absolute;top:0;left:0;width:100%;height:100%;';
+cont.appendChild(renderer.domElement);
+camera.position.z=25;
+camera.position.y=-3;
+
+// ==========================================
+// 2. PARTICLE & COLOR SETTINGS (HEX)        
+// ==========================================
+var count=8000;                        // Total number of 3D particles on screen
+var cPurple=new THREE.Color(0x4E2680); // Primary theme color (Purple)
+var cGreen=new THREE.Color(0x3DCBAA);  // Secondary accent color (Green)
+var cRed=new THREE.Color(0xFF0000);    // Color of the rendered heart (Red)
+
+var geometry=new THREE.BufferGeometry();
+var positions=new Float32Array(count*3);
+var colors=new Float32Array(count*3);
+var sphereTargets=new Float32Array(count*3);
+var textTargets=new Float32Array(count*3);
+var sphereColors=new Float32Array(count*3);
+var textColors=new Float32Array(count*3);
+
+for(var i=0;i<count;i++){
+  var phi=Math.acos(-1+(2*i)/count);
+  var theta=Math.sqrt(count*Math.PI)*phi;
+  var sx=8*Math.cos(theta)*Math.sin(phi);
+  var sy=8*Math.sin(theta)*Math.sin(phi);
+  var sz2=8*Math.cos(phi);
+  sphereTargets[i*3]=sx+(Math.random()-.5)*.5;
+  sphereTargets[i*3+1]=sy+(Math.random()-.5)*.5;
+  sphereTargets[i*3+2]=sz2+(Math.random()-.5)*.5;
+  positions[i*3]=sphereTargets[i*3];
+  positions[i*3+1]=sphereTargets[i*3+1];
+  positions[i*3+2]=sphereTargets[i*3+2];
+  var sc=Math.random()<0.5?cPurple:cGreen;
+  sphereColors[i*3]=sc.r;sphereColors[i*3+1]=sc.g;sphereColors[i*3+2]=sc.b;
+  colors[i*3]=sc.r;colors[i*3+1]=sc.g;colors[i*3+2]=sc.b;
+}
+
+function buildText(txt,offsetY){
+  var cv=document.createElement('canvas');
+  var cx=cv.getContext('2d');
+  var fs=96;
+  var font='bold '+fs+'px Arial';
+  cx.font=font;
+  var tw=cx.measureText(txt).width;
+  cv.width=tw+60;cv.height=fs+60;
+  cx.fillStyle='white';
+  cx.font=font;
+  cx.textBaseline='middle';cx.textAlign='center';
+  cx.fillText(txt,cv.width/2,cv.height/2);
+  var beforeHeart=cx.measureText('I ').width;
+  var upToHeart=cx.measureText('I \u2665').width;
+  var canvasCenterX=cv.width/2;
+  var textStartX=canvasCenterX-tw/2;
+  var heartX0=textStartX+beforeHeart;
+  var heartX1=textStartX+upToHeart;
+  var data=cx.getImageData(0,0,cv.width,cv.height).data;
+  var pts=[];
+  var scale=fs/7.5;
+  for(var i=0;i<data.length;i+=4){
+    if(data[i]>128){
+      var px=(i/4)%cv.width;
+      var py=Math.floor((i/4)/cv.width);
+      if(Math.random()<0.40){
+        var isHeart=(px>=heartX0&&px<=heartX1);
+        pts.push({x:(px-cv.width/2)/scale,y:-(py-cv.height/2)/scale+offsetY,heart:isHeart});
+      }
+    }
+  }
+  for(var j=0;j<count;j++){
+    if(j<pts.length){
+      textTargets[j*3]=pts[j].x;
+      textTargets[j*3+1]=pts[j].y;
+      textTargets[j*3+2]=(Math.random()-.5)*.8;
+      var tc=pts[j].heart?cRed:cPurple;
+      textColors[j*3]=tc.r;textColors[j*3+1]=tc.g;textColors[j*3+2]=tc.b;
+    } else {
+      var ang=Math.random()*Math.PI*2;
+      var rad=Math.random()*18+10;
+      textTargets[j*3]=Math.cos(ang)*rad;
+      textTargets[j*3+1]=Math.sin(ang)*rad+offsetY;
+      textTargets[j*3+2]=(Math.random()-.5)*8;
+      textColors[j*3]=cPurple.r;textColors[j*3+1]=cPurple.g;textColors[j*3+2]=cPurple.b;
+    }
+  }
+}
+
+// ==========================================
+// 3. ANIMATED TEXT (PARTICLES)              
+// ==========================================
+buildText('I \u2665 Power BI', 5);
+
+geometry.setAttribute('position',new THREE.BufferAttribute(positions,3));
+geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
+
+var mat=new THREE.PointsMaterial({size:0.09,vertexColors:true,blending:THREE.AdditiveBlending,transparent:true,opacity:0.85,sizeAttenuation:true});
+var particles=new THREE.Points(geometry,mat);
+scene.add(particles);
+
+// ==========================================
+// 4. TIMING & ANIMATION SPEED               
+// ==========================================
+var state='sphere',morphProgress=0,stateTimer=0;
+var STATE_DUR=260; // How long the sphere or text stays still (in frames)
+var MORPH_DUR=110; // How fast it transforms back and forth (lower = faster)
+
+function animate(){
+  requestAnimationFrame(animate);
+  stateTimer++;
+  if(stateTimer>STATE_DUR){
+    if(state==='sphere'){state='morphToText';morphProgress=0;}
+    else if(state==='text'){state='morphToSphere';morphProgress=0;}
+    stateTimer=0;
+  }
+  var pos=particles.geometry.attributes.position.array;
+  var col=particles.geometry.attributes.color.array;
+  if(state==='morphToText'||state==='morphToSphere'){
+    morphProgress++;
+    var t=Math.min(morphProgress/MORPH_DUR,1);
+    var et=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+    var fromP=state==='morphToText'?sphereTargets:textTargets;
+    var toP=state==='morphToText'?textTargets:sphereTargets;
+    var fromC=state==='morphToText'?sphereColors:textColors;
+    var toC=state==='morphToText'?textColors:sphereColors;
+    for(var i=0;i<pos.length;i++) pos[i]=fromP[i]+(toP[i]-fromP[i])*et;
+    for(var i=0;i<col.length;i++) col[i]=fromC[i]+(toC[i]-fromC[i])*et;
+    particles.geometry.attributes.position.needsUpdate=true;
+    particles.geometry.attributes.color.needsUpdate=true;
+    if(morphProgress>=MORPH_DUR){state=state==='morphToText'?'text':'sphere';stateTimer=0;}
+  }
+  
+  if(state==='sphere'){particles.rotation.y+=.003;particles.rotation.x+=.001;}
+  else{particles.rotation.y*=.95;particles.rotation.x*=.95;}
+  renderer.render(scene,camera);
+}
+animate();
+
+window.addEventListener('resize',function(){
+  var nw=window.innerWidth,nh=window.innerHeight;
+  camera.aspect=nw/nh;
+  camera.updateProjectionMatrix();
+  renderer.setSize(nw,nh);
+});
+}
+startParticles();
+</script>
+</div>"
