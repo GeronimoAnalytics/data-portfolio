@@ -1,0 +1,408 @@
+Viz - Diverging Particles SVG AxisAligned Compact = 
+VAR W = 1400
+VAR H = 850
+
+VAR CenterX = 700
+VAR CenterY = 420
+VAR TopY = 170             -- Iets verlaagd om het compacte blok mooi te centreren
+
+VAR GroupGap = 55          -- VERLAAGD van 70 naar 55 voor minder tussenruimte
+VAR BlockHeight = 48
+VAR AxisGap = 18
+
+VAR StartLeftX = 520
+VAR StartRightX = 880
+VAR StartBottomY = 742
+
+VAR DotsPerRow = 20
+VAR DotAdvance = 7
+VAR DotFontSize = 8
+VAR DotChar = UNICHAR(9679)
+
+VAR FemaleColor = "#E7A0C0"
+VAR MaleColor = "#8DB8EE"
+VAR GreyColor = "#9FA7B3"
+VAR TextColor = "#EEF3FF"
+VAR DimTextColor = "#B7C3DE"
+VAR LineColor = "#8EA1C8"
+
+VAR Base =
+    FILTER (
+        ALLSELECTED ( peepz ),
+        NOT ISBLANK ( peepz[geslachtcode] ) &&
+        NOT ISBLANK ( peepz[leeftijdsgroep_10] ) &&
+        NOT ISBLANK ( peepz[leeftijd] ) &&
+        peepz[geslachtcode] IN { "V", "M" }
+    )
+
+VAR GroupsBase =
+    SUMMARIZE ( Base, peepz[leeftijdsgroep_10] )
+
+VAR Groups =
+    ADDCOLUMNS (
+        GroupsBase,
+        "__MinLeeftijd", CALCULATE ( MIN ( peepz[leeftijd] ) )
+    )
+    
+VAR GroupsRanked = 
+    ADDCOLUMNS (
+        Groups,
+        "__Rank",
+            RANKX ( Groups, [__MinLeeftijd], , ASC, DENSE ),
+        "__Y",
+            TopY + ( RANKX ( Groups, [__MinLeeftijd], , ASC, DENSE ) - 1 ) * GroupGap
+    )
+
+VAR GroupCount = COUNTROWS ( GroupsRanked )
+VAR GlowCenterY =
+    TopY + DIVIDE ( ( GroupCount - 1 ) * GroupGap, 2, 0 ) + 18
+
+VAR BucketCountsBase =
+    ADDCOLUMNS (
+        SUMMARIZE ( Base, peepz[leeftijdsgroep_10], peepz[geslachtcode] ),
+        "__Count", CALCULATE ( COUNTROWS ( peepz ) )
+    )
+
+VAR BucketCounts =
+    ADDCOLUMNS (
+        BucketCountsBase,
+        "__GroupRank",
+            VAR g = peepz[leeftijdsgroep_10]
+            RETURN
+                MAXX (
+                    FILTER ( GroupsRanked, peepz[leeftijdsgroep_10] = g ),
+                    [__Rank]
+                ),
+        "__GroupY",
+            VAR g = peepz[leeftijdsgroep_10]
+            RETURN
+                MAXX (
+                    FILTER ( GroupsRanked, peepz[leeftijdsgroep_10] = g ),
+                    [__Y]
+                ),
+        "__CommonMaxCount",
+            VAR g = peepz[leeftijdsgroep_10]
+            RETURN
+                MAXX (
+                    FILTER ( BucketCountsBase, peepz[leeftijdsgroep_10] = g ),
+                    [__Count]
+                ),
+        "__CommonRows",
+            VAR g = peepz[leeftijdsgroep_10]
+            VAR MaxCnt =
+                MAXX (
+                    FILTER ( BucketCountsBase, peepz[leeftijdsgroep_10] = g ),
+                    [__Count]
+                )
+            RETURN
+                INT ( DIVIDE ( MaxCnt - 1, DotsPerRow, 0 ) ) + 1
+    )
+
+VAR GeneratedRows =
+    GENERATE (
+        BucketCounts,
+        VAR Cnt = [__Count]
+        VAR RowCount = INT ( DIVIDE ( Cnt - 1, DotsPerRow, 0 ) ) + 1
+        RETURN
+            SELECTCOLUMNS (
+                GENERATESERIES ( 1, RowCount, 1 ),
+                "__RowNo", [Value]
+            )
+    )
+
+VAR RowsStep1 =
+    ADDCOLUMNS (
+        GeneratedRows,
+        "__DotsInRow",
+            VAR Remaining = [__Count] - ( [__RowNo] - 1 ) * DotsPerRow
+            RETURN
+                MIN ( DotsPerRow, Remaining ),
+        "__RowText",
+            VAR Remaining = [__Count] - ( [__RowNo] - 1 ) * DotsPerRow
+            VAR N = MIN ( DotsPerRow, Remaining )
+            RETURN
+                REPT ( DotChar, N ),
+        "__CommonOffsetY",
+            VAR CommonRows = [__CommonRows]
+            VAR CommonHeight = CommonRows * DotAdvance
+            RETURN
+                MAX ( 0, DIVIDE ( BlockHeight - CommonHeight, 2, 0 ) )
+    )
+
+VAR RowsStep2 =
+    ADDCOLUMNS (
+        RowsStep1,
+        "__TargetY",
+            [__GroupY] + [__CommonOffsetY] + ( [__RowNo] - 1 ) * DotAdvance,
+        "__TargetX",
+            IF (
+                peepz[geslachtcode] = "V",
+                CenterX - AxisGap,
+                CenterX + AxisGap
+            ),
+        "__TargetAnchor",
+            IF ( peepz[geslachtcode] = "V", "end", "start" ),
+        "__OvershootX",
+            IF (
+                peepz[geslachtcode] = "V",
+                CenterX - AxisGap + 6,
+                CenterX + AxisGap - 6
+            ),
+        "__OvershootY",
+            [__GroupY] + [__CommonOffsetY] + ( [__RowNo] - 1 ) * DotAdvance - 1.5
+    )
+
+VAR RowsStep3 =
+    ADDCOLUMNS (
+        RowsStep2,
+        "__SexRowRank",
+            VAR s = peepz[geslachtcode]
+            RETURN
+                RANKX (
+                    FILTER ( RowsStep2, peepz[geslachtcode] = s ),
+                    [__GroupRank] * 100 + [__RowNo],
+                    ,
+                    ASC,
+                    DENSE
+                )
+    )
+
+VAR RowsFinal =
+    ADDCOLUMNS (
+        RowsStep3,
+        "__StartX",
+            IF (
+                peepz[geslachtcode] = "V",
+                StartLeftX,
+                StartRightX
+            ),
+        "__StartAnchor",
+            IF ( peepz[geslachtcode] = "V", "end", "start" ),
+        "__StartY",
+            StartBottomY - ( [__SexRowRank] - 1 ) * 8,
+        "__Delay",
+            0.34
+            + MOD ( [__SexRowRank] - 1, 26 ) * 0.018
+            + INT ( DIVIDE ( [__SexRowRank] - 1, 26, 0 ) ) * 0.045
+    )
+
+VAR SvgStyle =
+    "<style>
+        .btnText{user-select:none;pointer-events:none}
+        .axisLbl{letter-spacing:0.2px}
+        .dataLabel{font-family:'Segoe UI', Arial; font-size: 11px; font-weight: 600;}
+    </style>"
+
+VAR Defs =
+    "<defs>" &
+        "<radialGradient id='leftGlow' cx='50%' cy='50%' r='60%'>" &
+            "<stop offset='0%' stop-color='" & FemaleColor & "' stop-opacity='0.14' />" &
+            "<stop offset='55%' stop-color='" & FemaleColor & "' stop-opacity='0.06' />" &
+            "<stop offset='100%' stop-color='" & FemaleColor & "' stop-opacity='0' />" &
+        "</radialGradient>" &
+        "<radialGradient id='rightGlow' cx='50%' cy='50%' r='60%'>" &
+            "<stop offset='0%' stop-color='" & MaleColor & "' stop-opacity='0.14' />" &
+            "<stop offset='55%' stop-color='" & MaleColor & "' stop-opacity='0.06' />" &
+            "<stop offset='100%' stop-color='" & MaleColor & "' stop-opacity='0' />" &
+        "</radialGradient>" &
+        "<radialGradient id='centerFade' cx='50%' cy='50%' r='60%'>" &
+            "<stop offset='0%' stop-color='#040916' stop-opacity='0.00' />" &
+            "<stop offset='72%' stop-color='#040916' stop-opacity='0.05' />" &
+            "<stop offset='100%' stop-color='#040916' stop-opacity='0.18' />" &
+        "</radialGradient>" &
+    "</defs>"
+
+VAR BackgroundFx =
+    "<rect x='0' y='0' width='" & W & "' height='" & H & "' fill='url(#centerFade)' />" &
+    "<ellipse cx='" & ( CenterX - 150 ) & "' cy='" & GlowCenterY & "' rx='150' ry='255' fill='url(#leftGlow)' />" &
+    "<ellipse cx='" & ( CenterX + 150 ) & "' cy='" & GlowCenterY & "' rx='150' ry='255' fill='url(#rightGlow)' />"
+
+VAR TitleSvg =
+    "<text x='" & CenterX & "' y='52' text-anchor='middle' font-size='24' fill='" & TextColor & "' font-family='Segoe UI, Arial' font-weight='700'>Age distribution by gender</text>" &
+    "<text x='" & CenterX & "' y='76' text-anchor='middle' font-size='13' fill='" & DimTextColor & "' font-family='Segoe UI, Arial'>Click play to built the diverging bubble chart</text>"
+
+VAR ReplayPulse =
+    "<animate id='replayRun' attributeName='opacity' from='1' to='1' begin='replayBtn.click' dur='0.001s' fill='remove' />"
+
+VAR GroupBandsSvg =
+    CONCATENATEX (
+        GroupsRanked,
+        VAR BandY = [__Y] - 18
+        VAR BandOpacity =
+            IF ( MOD ( [__Rank], 2 ) = 0, "0.028", "0.016" )
+        RETURN
+            "<g opacity='0'>" &
+                "<set attributeName='opacity' to='0' begin='replayBtn.click' />" &
+                -- Breedte van de band iets versmald naar 38 voor de kortere GroupGap
+                "<rect x='320' y='" & BandY & "' width='760' height='38' rx='8' ry='8' fill='white' fill-opacity='" & BandOpacity & "' />" &
+                "<animate attributeName='opacity' begin='playBtn.click;replayRun.begin' dur='0.24s' to='1' fill='freeze' />" &
+            "</g>",
+        ""
+    )
+
+VAR CenterGuide =
+    "<line x1='" & CenterX & "' y1='112' x2='" & CenterX & "' y2='725' stroke='#C8D2EA' stroke-width='1' opacity='0'>" &
+        "<set attributeName='opacity' to='0' begin='replayBtn.click' />" &
+        "<animate attributeName='opacity' begin='playBtn.click;replayRun.begin' dur='0.30s' to='0.18' fill='freeze' />" &
+    "</line>"
+
+VAR AxisSvg =
+    CONCATENATEX (
+        GroupsRanked,
+        VAR TextY = [__Y] + 1 -- Aangepast aan de nieuwe compacte schaal
+        RETURN
+            "<g opacity='0'>" &
+                "<set attributeName='opacity' to='0' begin='replayBtn.click' />" &
+                "<line x1='" & ( CenterX - 24 ) & "' y1='" & TextY & "' x2='" & ( CenterX + 24 ) & "' y2='" & TextY & "' stroke='" & LineColor & "' stroke-width='0.9' opacity='0.35' />" &
+                "<text class='axisLbl' x='" & CenterX & "' y='" & TextY & "' text-anchor='middle' dominant-baseline='central' font-size='13' fill='" & TextColor & "' font-family='Segoe UI, Arial'>" &
+                    peepz[leeftijdsgroep_10] &
+                "</text>" &
+                "<animate attributeName='opacity' begin='playBtn.click;replayRun.begin' dur='0.28s' to='1' fill='freeze' />" &
+            "</g>",
+        ""
+    )
+
+VAR RowsSvg =
+    CONCATENATEX (
+        RowsFinal,
+        VAR IsVrouw = (peepz[geslachtcode] = "V")
+        VAR C = IF ( IsVrouw, FemaleColor, MaleColor )
+        
+        VAR BarHeight = 24 -- Iets minder dik gemaakt (van 28 naar 24) zodat het elegant blijft bij de kleinere gap
+        VAR BarY = [__GroupY] - 11  
+        
+        VAR TotalBarWidth = [__Count] * 1.30 -- Iets verhoogd naar 1.30 voor een mooie vulling in de breedte
+        VAR Radius = 5  
+        
+        VAR CurrentGroup = peepz[leeftijdsgroep_10]
+        VAR CategoryTotal = 
+            CALCULATE ( 
+                COUNTROWS ( peepz ), 
+                Base, 
+                peepz[leeftijdsgroep_10] = CurrentGroup, 
+                ALL ( peepz[geslachtcode] ) 
+            )
+            
+        VAR Pct = DIVIDE ( [__Count], CategoryTotal, 0 )
+        VAR LabelText = FORMAT ( [__Count], "#,##0" ) & " (" & FORMAT ( Pct, "0.0%" ) & ")"
+        
+        VAR LabelX = 
+            IF ( 
+                IsVrouw, 
+                [__TargetX] - TotalBarWidth - 10, 
+                [__TargetX] + TotalBarWidth + 10  
+            )
+        VAR LabelAnchor = IF ( IsVrouw, "end", "start" )
+        VAR LabelY = [__GroupY] + 1 
+        
+        VAR StartPath = 
+            IF ( 
+                IsVrouw,
+                "M " & [__TargetX] & " " & BarY & " " &
+                "H " & [__TargetX] & " " &
+                "A 0 0 0 0 0 " & [__TargetX] & " " & (BarY + BarHeight) & " " &
+                "H " & [__TargetX] & " Z",
+                "M " & [__TargetX] & " " & BarY & " " &
+                "H " & [__TargetX] & " " &
+                "A 0 0 0 0 1 " & [__TargetX] & " " & (BarY + BarHeight) & " " &
+                "H " & [__TargetX] & " Z"
+            )
+            
+        VAR EndPath = 
+            IF ( 
+                IsVrouw,
+                "M " & [__TargetX] & " " & BarY & " " &
+                "H " & ([__TargetX] - TotalBarWidth + Radius) & " " &
+                "A " & Radius & " " & Radius & " 0 0 0 " & ([__TargetX] - TotalBarWidth) & " " & (BarY + Radius) & " " &
+                "V " & (BarY + BarHeight - Radius) & " " &
+                "A " & Radius & " " & Radius & " 0 0 0 " & ([__TargetX] - TotalBarWidth + Radius) & " " & (BarY + BarHeight) & " " &
+                "H " & [__TargetX] & " Z",
+                "M " & [__TargetX] & " " & BarY & " " &
+                "H " & ([__TargetX] + TotalBarWidth - Radius) & " " &
+                "A " & Radius & " " & Radius & " 0 0 1 " & ([__TargetX] + TotalBarWidth) & " " & (BarY + Radius) & " " &
+                "V " & (BarY + BarHeight - Radius) & " " &
+                "A " & Radius & " " & Radius & " 0 0 1 " & ([__TargetX] + TotalBarWidth - Radius) & " " & (BarY + BarHeight) & " " &
+                "H " & [__TargetX] & " Z"
+            )
+            
+        VAR SX = FORMAT ( ROUND ( [__StartX], 1 ), "0.0" )
+        VAR SY = FORMAT ( ROUND ( [__StartY], 1 ), "0.0" )
+        VAR TX = FORMAT ( ROUND ( [__TargetX], 1 ), "0.0" )
+        VAR TY = FORMAT ( ROUND ( [__TargetY], 1 ), "0.0" )
+        VAR OX = FORMAT ( ROUND ( [__OvershootX], 1 ), "0.0" )
+        VAR OY = FORMAT ( ROUND ( [__OvershootY], 1 ), "0.0" )
+        VAR DelayText = FORMAT ( [__Delay], "0.000" )
+        VAR BarDelay = FORMAT ( [__Delay] + 2.0, "0.000" )
+        VAR TextShowDelay = FORMAT ( [__Delay] + 2.65, "0.000" ) 
+        
+        RETURN
+            "<g>" &
+                -- DE BOLLETJES
+                "<text x='" & SX & "' y='" & SY & "' text-anchor='" & [__StartAnchor] & "' font-size='" & DotFontSize & "' letter-spacing='3px' fill='" & GreyColor & "' fill-opacity='0.25' font-family='Segoe UI Symbol, Arial' opacity='0'>" &
+                    [__RowText] &
+                    "<set attributeName='x' to='" & SX & "' begin='replayBtn.click' />" &
+                    "<set attributeName='y' to='" & SY & "' begin='replayBtn.click' />" &
+                    "<set attributeName='text-anchor' to='" & [__StartAnchor] & "' begin='replayBtn.click' />" &
+                    "<set attributeName='opacity' to='0' begin='replayBtn.click' />" &
+                    "<set attributeName='fill' to='" & GreyColor & "' begin='replayBtn.click' />" &
+                    "<set attributeName='fill-opacity' to='0.25' begin='replayBtn.click' />" &
+                    "<animate attributeName='x' begin='playBtn.click+" & DelayText & "s;replayRun.begin+" & DelayText & "s' dur='1.00s' values='" & SX & ";" & OX & ";" & TX & "' keyTimes='0;0.82;1' calcMode='spline' keySplines='0.18 0.9 0.25 1;0.25 0.1 0.25 1' fill='freeze' />" &
+                    "<animate attributeName='y' begin='playBtn.click+" & DelayText & "s;replayRun.begin+" & DelayText & "s' dur='1.00s' values='" & SY & ";" & OY & ";" & TY & "' keyTimes='0;0.78;1' calcMode='spline' keySplines='0.20 0.85 0.28 1;0.22 0.10 0.25 1' fill='freeze' />" &
+                    "<set attributeName='text-anchor' to='" & [__TargetAnchor] & "' begin='playBtn.click+" & DelayText & "s;replayRun.begin+" & DelayText & "s' />" &
+                    "<animate attributeName='opacity' begin='playBtn.click+" & DelayText & "s;replayRun.begin+" & DelayText & "s' dur='0.40s' values='0;1;1' keyTimes='0;0.55;1' fill='freeze' />" &
+                    "<animate attributeName='fill-opacity' begin='playBtn.click+" & DelayText & "s;replayRun.begin+" & DelayText & "s' dur='0.48s' values='0.25;1;0.96' keyTimes='0;0.65;1' fill='freeze' />" &
+                    "<animate attributeName='fill' begin='playBtn.click+" & DelayText & "s;replayRun.begin+" & DelayText & "s' dur='0.56s' values='" & GreyColor & ";" & C & "' keyTimes='0;1' calcMode='spline' keySplines='0.22 1 0.36 1' fill='freeze' />" &
+                    "<animate attributeName='opacity' begin='playBtn.click+" & BarDelay & "s;replayRun.begin+" & BarDelay & "s' dur='0.15s' to='0' fill='freeze' />" &
+                "</text>" &
+                
+                -- DE SOLIDE HOOFDBALK + DATA LABELS PER CATEGORIE
+                IF ( [__RowNo] = 1,
+                    "<path d='" & StartPath & "' fill='" & C & "' opacity='0'>" &
+                        "<set attributeName='d' to='" & StartPath & "' begin='replayBtn.click' />" &
+                        "<set attributeName='opacity' to='0' begin='replayBtn.click' />" &
+                        "<set attributeName='opacity' to='1' begin='playBtn.click+" & BarDelay & "s;replayRun.begin+" & BarDelay & "s' />" &
+                        "<animate attributeName='d' begin='playBtn.click+" & BarDelay & "s;replayRun.begin+" & BarDelay & "s' dur='0.65s' to='" & EndPath & "' fill='freeze' calcMode='spline' keySplines='0.16 1 0.3 1' />" &
+                    "</path>" &
+                    
+                    -- HET DATA LABEL
+                    "<text class='dataLabel' x='" & LabelX & "' y='" & LabelY & "' text-anchor='" & LabelAnchor & "' dominant-baseline='central' fill='" & DimTextColor & "' opacity='0'>" &
+                        LabelText &
+                        "<set attributeName='opacity' to='0' begin='replayBtn.click' />" &
+                        "<animate attributeName='opacity' begin='playBtn.click+" & TextShowDelay & "s;replayRun.begin+" & TextShowDelay & "s' dur='0.4s' to='1' fill='freeze' />" &
+                    "</text>"
+                ) &
+            "</g>",
+        ""
+    )
+
+VAR PlayButton =
+    "<g id='playBtn' cursor='pointer'>" &
+        "<circle cx='" & CenterX & "' cy='" & CenterY & "' r='34' fill='#0B1328' fill-opacity='0.78' stroke='white' stroke-opacity='0.24' stroke-width='1.3' />" &
+        "<polygon points='" &
+            ( CenterX - 8 ) & "," & ( CenterY - 12 ) & " " &
+            ( CenterX - 8 ) & "," & ( CenterY + 12 ) & " " &
+            ( CenterX + 15 ) & "," & CenterY &
+        "' fill='white' />" &
+        "<animate attributeName='opacity' begin='playBtn.click' dur='0.16s' to='0' fill='freeze' />" &
+    "</g>"
+
+VAR ReplayButton =
+    "<g id='replayBtn' cursor='pointer'>" &
+        "<rect x='1246' y='24' rx='11' ry='11' width='112' height='36' fill='#0B1328' fill-opacity='0.76' stroke='white' stroke-opacity='0.18' stroke-width='1' />" &
+        "<text class='btnText' x='1302' y='47' text-anchor='middle' font-size='13' fill='" & TextColor & "' font-family='Segoe UI, Arial' font-weight='600'>↻ Replay</text>" &
+        ReplayPulse &
+    "</g>"
+
+RETURN
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " & W & " " & H & "' width='100%' height='100%'>" &
+        SvgStyle &
+        Defs &
+        BackgroundFx &
+        GroupBandsSvg &
+        TitleSvg &
+        CenterGuide &
+        AxisSvg &
+        RowsSvg &
+        PlayButton &
+        ReplayButton &
+    "</svg>"
