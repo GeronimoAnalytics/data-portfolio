@@ -31,7 +31,7 @@ data-portfolio/
 ├── 01_realtime-iss-tracker/     # Microsoft Fabric Eventstream & KQL Case Study
 │   ├── README.md
 │   ├── assets/                  # Screenshots, diagrams, video demo
-│   ├── kql-queries/             # KQL and DAX query implementations
+│   ├── dax-queries/             # KQL and DAX query implementations
 │   └── Project_Documentation_Realtime_ISS_Tracker_EN.pdf
 ├── BubbleToBar/                 # Custom animated SVG population bubble visual
 ├── Power BI Landing Page/       # Premium 3D particle animation report canvas

@@ -57,7 +57,7 @@ Instead of relying on scheduled refreshes or static data loads, this architectur
 │   ├── screenshot2.png                          # Dashboard view 2
 │   ├── Workspacecontent.png                     # Workspace layout
 │   └── issns.mp4                                # Demo video
-└── kql-queries/
+└── dax-queries/
     ├── LiveTelemetryHTML.dax                    # Live telemetry DAX queries
     └── MissionElapsedTimeHTML.dax               # Mission time calculation DAX
 ```
@@ -122,7 +122,7 @@ This project demonstrates:
 
 1. **Review the Documentation:** See `Project_Documentation_Realtime_ISS_Tracker_EN.pdf` for detailed setup instructions
 2. **Explore the Architecture:** Check `assets/pipeline.png` and `assets/Workspacecontent.png` to understand the layout
-3. **Examine the Queries:** Review `.kql` files in the `kql-queries/` folder for implementation details
+3. **Examine the Queries:** Review `.dax` files in the `dax-queries/` folder for implementation details
 4. **View Dashboards:** Screenshots in `assets/` show the final visualization
 
 ## References
