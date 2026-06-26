@@ -56,7 +56,7 @@ Instead of relying on scheduled refreshes or static data loads, this architectur
 │   ├── screenshot1.png                          # Dashboard view 1
 │   ├── screenshot2.png                          # Dashboard view 2
 │   ├── Workspacecontent.png                     # Workspace layout
-│   └── iss.mp4                                  # Demo video
+│   └── issns.mp4                                # Demo video
 └── kql-queries/
     ├── LiveTelemetryHTML.dax                    # Live telemetry DAX queries
     └── MissionElapsedTimeHTML.dax               # Mission time calculation DAX
