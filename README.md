@@ -27,7 +27,7 @@ Welcome to my personal data portfolio. This repository serves as a curated showc
 Every folder in this repository contains a standalone project complete with its own dedicated documentation, scripts, and architectural teardowns:
 
 ```
-dataviz/
+data-portfolio/
 ├── 01_realtime-iss-tracker/     # Microsoft Fabric Eventstream & KQL Case Study
 │   ├── README.md
 │   ├── assets/                  # Screenshots, diagrams, video demo
@@ -63,7 +63,7 @@ Exploratory data analysis, statistical modeling, and Python-based data science w
 Feel free to browse through the folders to explore the source code, queries, and design implementations. If you have any questions about the architectures or techniques used, let's connect!
 
 * **GitHub:** [@GeronimoAnalytics](https://github.com/GeronimoAnalytics)
-* **Portfolio:** [geronimoanalytics.com](https://geronimoanalytics.com](https://geronimoanalytics.github.io/about/))
+* **Portfolio:** [geronimoanalytics.com](https://geronimoanalytics.github.io/about/)
 
 ---
 
