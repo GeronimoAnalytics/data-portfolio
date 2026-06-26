@@ -10,7 +10,7 @@ Welcome to my personal data portfolio. This repository serves as a curated showc
 | **[`BubbleToBar`](./BubbleToBar)** | Power BI, DAX, SVG, HTML/CSS | Advanced Data Viz | A fully customized, animated particle bubble chart that morphs into a bar chart inside a single measure. |
 | **[`Power BI Landing Page`](./Power%20BI%20Landing%20Page)** | Power BI, UI/UX Design, Web Tech | Dashboard UX | A premium, interactive application-like portal environment designed directly within the report canvas. |
 | **[`Power BI`](./Power%20BI)** | Power BI, DAX, Advanced Visuals | Core BI | A collection of specialized custom assets, including custom KPI gauges and advanced financial/operational dashboards. |
-| **[`05_data_analysis`](#)** | Python, Jupyter Notebooks, Pandas | Data Science | Statistical analysis, exploratory data analysis (EDA), and predictive modeling on various datasets. |
+| **[`05_data_analysis`](./05_data_analysis)** | Python, Jupyter Notebooks, Pandas | Data Science | Statistical analysis, exploratory data analysis (EDA), and predictive modeling on various datasets. |
 
 ---
 
