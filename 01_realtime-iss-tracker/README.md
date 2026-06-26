@@ -3,6 +3,11 @@
 A live, high-throughput streaming dashboard that tracks the International Space Station (ISS) in real-time, built entirely using **Microsoft Fabric Eventstreams** and **KQL databases**.
 
 Instead of relying on scheduled refreshes or static data loads, this architecture ingests live orbital coordinates via an API and processes them instantly. The telemetry data—including speed, altitude, and position—is continuously piped through a streaming pipeline and visualized on a dynamic command-center dashboard, showcasing how modern cloud data platforms handle sub-second data streams.
+## Preview
+
+![Real-Time ISS Tracker Dashboard](assets/screenshot1.png)
+
+
 
 ## Key Features
 
@@ -132,3 +137,4 @@ This project demonstrates:
 **Last Updated:** June 2026  
 **Project Status:** Production ✓  
 **Data Source:** International Space Station Public API
+
