@@ -4,6 +4,8 @@ Welcome to **The Ultimate Pokemon Analytics Suite**! This is a custom, high-fide
 
 Whether you are min-maxing your competitive team or just want to see how Pikachu's speed stacks up against your favorite Pokemon, this suite turns raw pocket monster data into actionable battle intelligence.
 
+![Pokemon Analytics Dashboard](./pokemon.png)
+
 ## Features
 
 - **Poke Details Screen**: Deep-dive into individual Pokemon metrics, base stat totals, and Body Mass Index (BMI) tracking.
