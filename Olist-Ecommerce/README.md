@@ -64,7 +64,7 @@ Dynamic card navigation system with smooth transitions between dashboards:
 
 ## Technical Implementation
 
-### Advanced DAX & Context Transition
+### DAX & Context Transition
 
 Formulated advanced measures using CALCULATE, DIVIDE, and time-intelligence logic to evaluate complex data across disconnected granularities (Orders vs. Items vs. Reviews).
 
