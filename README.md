@@ -8,6 +8,7 @@ Welcome to my personal data portfolio. This repository serves as a curated showc
 | :--- | :--- | :--- | :--- |
 | **[`01_realtime-iss-tracker`](./01_realtime-iss-tracker)** | Microsoft Fabric, KQL, Eventstreams | Cloud & Streaming | Near real-time ingestion and time-series analysis of the International Space Station coordinates. |
 | **[`BubbleToBar`](./BubbleToBar)** | Power BI, DAX, SVG, HTML/CSS | Advanced Data Viz | A fully customized, animated particle bubble chart that morphs into a bar chart inside a single measure. |
+| **[`Airco-Effect`](./Airco-Effect)** | Power BI, React, D3.js | Custom Visual | An interactive visual for predicting monthly office attendance and comparing it with example data. |
 | **[`Power BI Landing Page`](./Power%20BI%20Landing%20Page)** | Power BI, UI/UX Design, Web Tech | Dashboard UX | A premium, interactive application-like portal environment designed directly within the report canvas. |
 | **[`Power BI`](./Power%20BI)** | Power BI, DAX, Advanced Visuals | Core BI | A collection of specialized custom assets, including custom KPI gauges and advanced financial/operational dashboards. |
 | **[`05_data_analysis`](./05_data_analysis)** | Python, Jupyter Notebooks, Pandas | Data Science | Statistical analysis, exploratory data analysis (EDA), and predictive modeling on various datasets. |
@@ -34,6 +35,7 @@ data-portfolio/
 │   ├── dax-queries/             # KQL and DAX query implementations
 │   └── Project_Documentation_Realtime_ISS_Tracker_EN.pdf
 ├── BubbleToBar/                 # Custom animated SVG population bubble visual
+├── Airco-Effect/                # Interactive Power BI custom visual
 ├── Power BI Landing Page/       # Premium 3D particle animation report canvas
 ├── Power BI/                    # Advanced Power BI visuals (e.g., Flow Ratio KPI gauge)
 ├── 05_data_analysis/            # Python & Jupyter Notebook exploratory analysis
