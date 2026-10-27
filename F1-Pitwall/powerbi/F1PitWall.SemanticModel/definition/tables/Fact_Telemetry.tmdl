@@ -1,0 +1,132 @@
+/// Distance-resampled car telemetry + derived physics (G-forces, est. brake pressure)
+table Fact_Telemetry
+	lineageTag: de6df108-e7fe-47c5-ab94-aa2a193ba8f5
+
+	column RaceID
+		dataType: int64
+		isHidden
+		lineageTag: 52f3cb52-c60a-4afe-ac57-c3a518065d56
+		summarizeBy: none
+		sourceColumn: RaceID
+
+	column DriverID
+		dataType: string
+		isHidden
+		lineageTag: c665bdd3-d66b-4b0f-9aa5-2384f96b3c77
+		summarizeBy: none
+		sourceColumn: DriverID
+
+	column LapNumber
+		dataType: int64
+		lineageTag: 63674888-1976-4630-bbef-435e4d3f4380
+		summarizeBy: none
+		sourceColumn: LapNumber
+
+	column Distance
+		dataType: double
+		formatString: 0
+		lineageTag: 3cfb7b21-9a67-4ffa-9668-21804ad904cd
+		summarizeBy: none
+		sourceColumn: Distance
+
+	column ElapsedTime
+		dataType: double
+		formatString: 0.000
+		lineageTag: 7762e7c8-3592-4e9c-b65c-d281cc7a20d3
+		summarizeBy: none
+		sourceColumn: ElapsedTime
+
+	column Speed
+		dataType: double
+		formatString: 0.0
+		lineageTag: c46fd647-0ce5-4a1b-958d-b30e1ed6e243
+		summarizeBy: none
+		sourceColumn: Speed
+
+	column Throttle
+		dataType: double
+		formatString: 0
+		lineageTag: c47c40bd-c1ff-443e-a105-7887c5f445d7
+		summarizeBy: none
+		sourceColumn: Throttle
+
+	column Brake
+		dataType: boolean
+		lineageTag: 4c078c0b-80db-4079-a6fd-7596775848e3
+		summarizeBy: none
+		sourceColumn: Brake
+
+	column Gear
+		dataType: int64
+		lineageTag: ebb7d557-8fe8-4f82-bc02-c6ac8e63b646
+		summarizeBy: none
+		sourceColumn: Gear
+
+	column DRS
+		dataType: int64
+		isHidden
+		lineageTag: f732af9f-8cad-4727-9802-16861f8c8ca8
+		summarizeBy: none
+		sourceColumn: DRS
+
+	column DRSOpen
+		dataType: boolean
+		lineageTag: 9523e92d-3c69-4aa9-aecc-8c0f32e0539e
+		summarizeBy: none
+		sourceColumn: DRSOpen
+
+	column X
+		dataType: double
+		isHidden
+		lineageTag: 265e554f-1475-428e-84f1-791476a074ae
+		summarizeBy: none
+		sourceColumn: X
+
+	column Y
+		dataType: double
+		isHidden
+		lineageTag: f0fb056b-6254-49d5-bc62-97de99a33d3e
+		summarizeBy: none
+		sourceColumn: Y
+
+	column G_Long
+		dataType: double
+		formatString: 0.00
+		lineageTag: 34a82fd4-cc32-4d74-a288-05ad2559ea03
+		summarizeBy: none
+		sourceColumn: G_Long
+
+	column G_Lat
+		dataType: double
+		formatString: 0.00
+		lineageTag: e4b67a5c-3aa8-4d8d-8712-046b63dbf9c5
+		summarizeBy: none
+		sourceColumn: G_Lat
+
+	column G_Total
+		dataType: double
+		formatString: 0.00
+		lineageTag: 27c9bfbc-d3b0-49e7-bd5a-6b1cbf212b96
+		summarizeBy: none
+		sourceColumn: G_Total
+
+	column BrakePressurePct
+		dataType: double
+		formatString: 0
+		lineageTag: 12ee0ff0-1da2-44ca-a8d5-b7108f6b8e89
+		summarizeBy: none
+		sourceColumn: BrakePressurePct
+
+	column IsFastestLap
+		dataType: boolean
+		lineageTag: 3d7028e4-7b2d-4284-9981-9b874edd1d3c
+		summarizeBy: none
+		sourceColumn: IsFastestLap
+
+	partition Fact_Telemetry = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document ( File.Contents ( DataFolder & "\Fact_Telemetry.parquet" ) )
+				in
+				    Source

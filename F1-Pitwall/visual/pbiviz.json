@@ -1,0 +1,26 @@
+{
+  "visual": {
+    "name": "f1PitwallLambiase",
+    "displayName": "F1 Pitwall \u00b7 Lambiase Edition",
+    "guid": "f1pitwall30B203284B264E9DBD0D8EAEDC49A694",
+    "visualClassName": "Visual",
+    "version": "1.0.0.0",
+    "description": "Multi-race F1 pitwall: live track replay, timing, telemetry & derived physics, tyre strategy and team radio.",
+    "supportUrl": "https://github.com/GeronimoAnalytics/data-portfolio/tree/main/F1-Pitwall",
+    "gitHubUrl": "https://github.com/GeronimoAnalytics/data-portfolio/tree/main/F1-Pitwall"
+  },
+  "apiVersion": "5.11.1",
+  "author": {
+    "name": "GeronimoAnalytics",
+    "email": "jhalverstad@alfa.nl"
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": null,
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json",
+  "dependencies": null,
+  "stringResources": [],
+  "version": "1.0.0.0"
+}

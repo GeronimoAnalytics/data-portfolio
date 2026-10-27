@@ -1,0 +1,35 @@
+/// Disconnected driver picker A for head-to-head comparisons (no relationships on purpose)
+table 'Driver A'
+	lineageTag: e3d028e6-ce51-4e05-8341-ca2e1b7b7977
+
+	column DriverID
+		dataType: string
+		isHidden
+		lineageTag: db7ea87a-45df-40a9-a6a1-f58daf517434
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DriverID]
+
+	column 'Driver A'
+		dataType: string
+		lineageTag: 66223b3d-3c32-4dcd-9a62-05901e306190
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Driver A]
+
+	column Code
+		dataType: string
+		lineageTag: 31e41f01-d1d0-401f-9fad-f65ca6b02a2c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Code]
+
+	partition 'Driver A' = calculated
+		mode: import
+		source =
+				SELECTCOLUMNS (
+				    Dim_Driver,
+				    "DriverID", Dim_Driver[DriverID],
+				    "Driver A", Dim_Driver[DriverName],
+				    "Code", Dim_Driver[Code]
+				)

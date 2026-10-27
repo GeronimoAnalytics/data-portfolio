@@ -1,0 +1,1245 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "4a7c286f305727661be3",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "height": 1080,
+    "width": 1919.6930946291559,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "f1pitwall30B203284B264E9DBD0D8EAEDC49A694",
+    "query": {
+      "queryState": {
+        "feed": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "RowKey"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.RowKey",
+              "nativeQueryRef": "RowKey"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "RecordType"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.RecordType",
+              "nativeQueryRef": "RecordType"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "RaceID"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.RaceID",
+              "nativeQueryRef": "RaceID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Season"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Season",
+              "nativeQueryRef": "Season"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Round"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Round",
+              "nativeQueryRef": "Round"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "RaceName"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.RaceName",
+              "nativeQueryRef": "RaceName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Circuit"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Circuit",
+              "nativeQueryRef": "Circuit"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "TotalLaps"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.TotalLaps",
+              "nativeQueryRef": "TotalLaps"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "PitLoss"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.PitLoss",
+              "nativeQueryRef": "PitLoss"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "DriverID"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.DriverID",
+              "nativeQueryRef": "DriverID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Code"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Code",
+              "nativeQueryRef": "Code"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "DriverName"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.DriverName",
+              "nativeQueryRef": "DriverName"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "ConstructorID"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.ConstructorID",
+              "nativeQueryRef": "ConstructorID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Grid"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Grid",
+              "nativeQueryRef": "Grid"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Classified"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Classified",
+              "nativeQueryRef": "Classified"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "LapNumber"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.LapNumber",
+              "nativeQueryRef": "LapNumber"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "LapStart"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.LapStart",
+              "nativeQueryRef": "LapStart"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "LapTime"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.LapTime",
+              "nativeQueryRef": "LapTime"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "S1"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.S1",
+              "nativeQueryRef": "S1"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "S2"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.S2",
+              "nativeQueryRef": "S2"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "S3"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.S3",
+              "nativeQueryRef": "S3"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Compound"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Compound",
+              "nativeQueryRef": "Compound"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "TyreAge"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.TyreAge",
+              "nativeQueryRef": "TyreAge"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Stint"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Stint",
+              "nativeQueryRef": "Stint"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "PitIn"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.PitIn",
+              "nativeQueryRef": "PitIn"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "PitOut"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.PitOut",
+              "nativeQueryRef": "PitOut"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Clean"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Clean",
+              "nativeQueryRef": "Clean"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "FuelKg"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.FuelKg",
+              "nativeQueryRef": "FuelKg"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "FuelCorrLap"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.FuelCorrLap",
+              "nativeQueryRef": "FuelCorrLap"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "DegPct"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.DegPct",
+              "nativeQueryRef": "DegPct"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Distance"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Distance",
+              "nativeQueryRef": "Distance"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Elapsed"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Elapsed",
+              "nativeQueryRef": "Elapsed"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "X"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.X",
+              "nativeQueryRef": "X"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Y"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Y",
+              "nativeQueryRef": "Y"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Speed"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Speed",
+              "nativeQueryRef": "Speed"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Throttle"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Throttle",
+              "nativeQueryRef": "Throttle"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Brake"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Brake",
+              "nativeQueryRef": "Brake"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "BrakePct"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.BrakePct",
+              "nativeQueryRef": "BrakePct"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "Gear"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.Gear",
+              "nativeQueryRef": "Gear"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "DRS"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.DRS",
+              "nativeQueryRef": "DRS"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "GLong"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.GLong",
+              "nativeQueryRef": "GLong"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Fact_VisualFeed"
+                    }
+                  },
+                  "Property": "GLat"
+                }
+              },
+              "queryRef": "Fact_VisualFeed.GLat",
+              "nativeQueryRef": "GLat"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "020de342408eb5078f2c",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "RowKey"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "77339d065807373ac794",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "RecordType"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "a670ad96f640d5c46346",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "RaceID"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b326161b1b8e5d9fbcc0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Season"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "356e407f3333b10d6525",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Round"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7b40d54209cfe10c10f8",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "RaceName"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "aaf6dc8cf92a88f96a1f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Circuit"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "1f7f936f5f56e76535ba",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "TotalLaps"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "60b4c411a1b2439f1fdc",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "PitLoss"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e5106051ee62b34a721d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "DriverID"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5828f69a4f9d9ba79dfc",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Code"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "a34083b561628e95eb72",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "DriverName"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "aabe130bef4d9807e7b6",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "ConstructorID"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "7c29d5c4bf9ca33c3a9a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Grid"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3ef5ea9769f420fbad96",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Classified"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "5dbd736ec526213c91be",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "LapNumber"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "0e127451b59c48c84785",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "LapStart"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "59fcf8ebd1cc856cc68f",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "LapTime"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "9177c01cb22cf58ff074",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "S1"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6582179b96d5aed5d9b2",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "S2"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "6623d6bbccc1ed5aa7d4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "S3"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "b5291486010041f603e0",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Compound"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "75dfc20cef4a0e064d7b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "TyreAge"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "344a0c59053738af6e37",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Stint"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "df927accc2629ccb0fe5",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "PitIn"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "26859e547ddc4e87bc91",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "PitOut"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "612b3017b97dc3142dfb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Clean"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "460c348e94d33abf273b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "FuelKg"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "54eb47c623909b865d9e",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "FuelCorrLap"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ca87875ed286565339d1",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "DegPct"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2f7d86d8e48515a21f70",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Distance"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3801d802b1dd59b3db01",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Elapsed"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "20a023ee3017a990398d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "X"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "e6fb5b52bf29272f562b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Y"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "be616b19e139e6262981",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Speed"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "7e5a61ca183134a02731",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Throttle"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "88935615346a7d0f3c67",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Brake"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3ae4aaa115e2a0bb2c82",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "BrakePct"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "bf4bdfa92ae4f652d057",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "Gear"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "99207713b6610390bbf4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "DRS"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "ccfe1d16d9b4639a35a3",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "GLong"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "c4e26fce88f05fa4f6e7",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Fact_VisualFeed"
+              }
+            },
+            "Property": "GLat"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

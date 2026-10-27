@@ -1,0 +1,264 @@
+/// Denormalised multi-grain feed for the Pitwall custom visual (RecordType L = lap, T = telemetry sample).
+/// Drag ALL columns into the visual's 'Pitwall feed' well. Not meant for regular report visuals.
+table Fact_VisualFeed
+	lineageTag: 3d5b0f33-df0d-486b-bbe7-13c9439ea3ca
+
+	column RowKey
+		dataType: int64
+		lineageTag: f8c5c500-597b-470b-a58f-c7409629d97d
+		summarizeBy: none
+		sourceColumn: RowKey
+
+	column RecordType
+		dataType: string
+		lineageTag: fb20d5ba-b4a1-4fe6-834f-7859ac3bd4a2
+		summarizeBy: none
+		sourceColumn: RecordType
+
+	column RaceID
+		dataType: int64
+		lineageTag: 8a38031c-2322-4a42-8c31-f28802e433f7
+		summarizeBy: none
+		sourceColumn: RaceID
+
+	column Season
+		dataType: int64
+		lineageTag: a9d62fa8-bfa0-4969-9e7b-49c368574fe3
+		summarizeBy: none
+		sourceColumn: Season
+
+	column Round
+		dataType: int64
+		lineageTag: c0851aab-7f0a-4129-9327-e77193ae0760
+		summarizeBy: none
+		sourceColumn: Round
+
+	column RaceName
+		dataType: string
+		lineageTag: ab0cd075-7933-463b-8523-5177e6898770
+		summarizeBy: none
+		sourceColumn: RaceName
+
+	column Circuit
+		dataType: string
+		lineageTag: 89dd7f48-d556-4af1-bd60-97c81d120c52
+		summarizeBy: none
+		sourceColumn: Circuit
+
+	column TotalLaps
+		dataType: int64
+		lineageTag: 0e67e676-988e-4b90-9f8d-ac7b757204ba
+		summarizeBy: none
+		sourceColumn: TotalLaps
+
+	column PitLoss
+		dataType: double
+		lineageTag: de2132c2-48cd-4fab-b05c-8ccc66129b29
+		summarizeBy: none
+		sourceColumn: PitLoss
+
+	column DriverID
+		dataType: string
+		lineageTag: dc3e5bc7-9c97-4cb6-8e0a-2d7b9bab41da
+		summarizeBy: none
+		sourceColumn: DriverID
+
+	column Code
+		dataType: string
+		lineageTag: 6809a90e-0dd8-4201-94c2-bc2472187d2e
+		summarizeBy: none
+		sourceColumn: Code
+
+	column DriverName
+		dataType: string
+		lineageTag: 93e01421-a905-408f-b998-d2f69408558c
+		summarizeBy: none
+		sourceColumn: DriverName
+
+	column ConstructorID
+		dataType: string
+		lineageTag: b22885c5-1355-4985-8e55-004826422842
+		summarizeBy: none
+		sourceColumn: ConstructorID
+
+	column Grid
+		dataType: int64
+		lineageTag: 2ff047e4-9f3c-4c9c-b51f-c6478cf31f81
+		summarizeBy: none
+		sourceColumn: Grid
+
+	column Classified
+		dataType: string
+		lineageTag: b4ee4649-8afa-4d8c-a75c-ce9c8e513776
+		summarizeBy: none
+		sourceColumn: Classified
+
+	column LapNumber
+		dataType: int64
+		lineageTag: 906e2f04-54cf-4a27-8d5f-c5a44259cb04
+		summarizeBy: none
+		sourceColumn: LapNumber
+
+	column LapStart
+		dataType: double
+		lineageTag: 825fed6d-a376-45f8-bb82-426b9affbbdc
+		summarizeBy: none
+		sourceColumn: LapStart
+
+	column LapTime
+		dataType: double
+		lineageTag: 4d34ac61-d11a-4104-a56d-af208412479a
+		summarizeBy: none
+		sourceColumn: LapTime
+
+	column S1
+		dataType: double
+		lineageTag: dd052580-5bd8-4752-9e95-ff9149d1da34
+		summarizeBy: none
+		sourceColumn: S1
+
+	column S2
+		dataType: double
+		lineageTag: 4c050288-d2cf-4346-b288-29e06e802c28
+		summarizeBy: none
+		sourceColumn: S2
+
+	column S3
+		dataType: double
+		lineageTag: 333cea00-191b-4c79-b30f-7c205cd204b8
+		summarizeBy: none
+		sourceColumn: S3
+
+	column Compound
+		dataType: string
+		lineageTag: 4b8e585e-246d-48dc-8456-9a7413079dc4
+		summarizeBy: none
+		sourceColumn: Compound
+
+	column TyreAge
+		dataType: int64
+		lineageTag: fd2e93e6-07bb-4d89-9acf-4e23bb88c59a
+		summarizeBy: none
+		sourceColumn: TyreAge
+
+	column Stint
+		dataType: int64
+		lineageTag: a517e9a4-dcc5-4fa0-8d04-d5d50582eb58
+		summarizeBy: none
+		sourceColumn: Stint
+
+	column PitIn
+		dataType: double
+		lineageTag: 807c6974-c39e-4c01-ac3c-54c5ee5b87de
+		summarizeBy: none
+		sourceColumn: PitIn
+
+	column PitOut
+		dataType: double
+		lineageTag: d3f90e72-aff8-4096-a992-551d910f756d
+		summarizeBy: none
+		sourceColumn: PitOut
+
+	column Clean
+		dataType: double
+		lineageTag: 49cfea03-197a-414b-939d-fc05fa9ff67a
+		summarizeBy: none
+		sourceColumn: Clean
+
+	column FuelKg
+		dataType: double
+		lineageTag: 70b44ef5-7af8-4f14-a35e-a3c72a070a2d
+		summarizeBy: none
+		sourceColumn: FuelKg
+
+	column FuelCorrLap
+		dataType: double
+		lineageTag: be18e4b2-8b04-4b15-aa51-67e722b4ca9b
+		summarizeBy: none
+		sourceColumn: FuelCorrLap
+
+	column DegPct
+		dataType: double
+		lineageTag: 034360d7-943f-4634-b515-93116fcba82e
+		summarizeBy: none
+		sourceColumn: DegPct
+
+	column Distance
+		dataType: double
+		lineageTag: ef1b9397-d56c-4436-aa1b-c59115322b05
+		summarizeBy: none
+		sourceColumn: Distance
+
+	column Elapsed
+		dataType: double
+		lineageTag: f4c5bd1d-1d7a-4468-816d-bb67a659326b
+		summarizeBy: none
+		sourceColumn: Elapsed
+
+	column X
+		dataType: double
+		lineageTag: 2f0a3665-c598-4a73-962b-7cbc87caab9a
+		summarizeBy: none
+		sourceColumn: X
+
+	column Y
+		dataType: double
+		lineageTag: 99cd45d9-1b8a-492e-8170-d40a5184922e
+		summarizeBy: none
+		sourceColumn: Y
+
+	column Speed
+		dataType: double
+		lineageTag: 872633d1-77f1-4e51-b37f-f2f056df6de1
+		summarizeBy: none
+		sourceColumn: Speed
+
+	column Throttle
+		dataType: double
+		lineageTag: c3f9a380-832a-4556-a0b6-dca10df11a80
+		summarizeBy: none
+		sourceColumn: Throttle
+
+	column Brake
+		dataType: double
+		lineageTag: 3aae95d2-ed9f-4973-829d-7fd1d1f0e6c5
+		summarizeBy: none
+		sourceColumn: Brake
+
+	column BrakePct
+		dataType: double
+		lineageTag: 7a12159b-0e54-43a5-b569-0ca84b3a83b0
+		summarizeBy: none
+		sourceColumn: BrakePct
+
+	column Gear
+		dataType: int64
+		lineageTag: 062160b9-b80d-475e-bfdf-5c264b08ea83
+		summarizeBy: none
+		sourceColumn: Gear
+
+	column DRS
+		dataType: double
+		lineageTag: df79fde4-f44d-4e5e-9c95-b48bc944a16f
+		summarizeBy: none
+		sourceColumn: DRS
+
+	column GLong
+		dataType: double
+		lineageTag: 182dffb0-c002-4e1a-a10e-71065b371fd8
+		summarizeBy: none
+		sourceColumn: GLong
+
+	column GLat
+		dataType: double
+		lineageTag: 51e8b693-4564-451e-8de6-a533d2120b7a
+		summarizeBy: none
+		sourceColumn: GLat
+
+	partition Fact_VisualFeed = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document ( File.Contents ( DataFolder & "\Fact_VisualFeed.parquet" ) )
+				in
+				    Source

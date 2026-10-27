@@ -1,0 +1,31 @@
+{
+    "dataRoles": [
+        {
+            "displayName": "Pitwall feed (all Fact_VisualFeed columns)",
+            "description": "Drag every column of Fact_VisualFeed here. Columns are matched by name.",
+            "name": "feed",
+            "kind": "Grouping"
+        }
+    ],
+    "dataViewMappings": [
+        {
+            "conditions": [
+                { "feed": { "max": 60 } }
+            ],
+            "table": {
+                "rows": {
+                    "select": [
+                        { "for": { "in": "feed" } }
+                    ],
+                    "dataReductionAlgorithm": {
+                        "window": { "count": 30000 }
+                    }
+                }
+            }
+        }
+    ],
+    "objects": {},
+    "supportsLandingPage": true,
+    "suppressDefaultTitle": true,
+    "privileges": []
+}

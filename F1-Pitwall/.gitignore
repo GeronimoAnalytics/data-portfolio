@@ -1,0 +1,15 @@
+/data/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+**/.pbi/
+**/node_modules/
+visual/.vscode/
+**/localSettings.json
+**/editorSettings.json
+**/cache.abf
+visual/harness/feed.json
+visual/harness/dist/
+visual/.tmp/
+visual/webpack.statistics*.html
+visual/assets/max_radio_rage.mp3

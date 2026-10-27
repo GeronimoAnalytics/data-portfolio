@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "pitwall"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e4d302d4-7a4c-443e-bb18-7f29c646d95e"
+  }
+}

@@ -1,0 +1,430 @@
+/// Home table for all measures (single hidden dummy column)
+table _Measures
+	lineageTag: d82ba6e1-8794-4774-94fc-4938c02e896d
+
+	/// Number of Grands Prix in context
+	measure Races = DISTINCTCOUNT ( Fact_RaceResults[RaceID] )
+		formatString: 0
+		displayFolder: Results
+		lineageTag: 459f9653-c0a0-43de-af05-8f277411f3ed
+
+	/// Championship points scored
+	measure 'Total Points' = SUM ( Fact_RaceResults[Points] )
+		formatString: 0.#
+		displayFolder: Results
+		lineageTag: aa957732-8c0e-43b3-9e32-756cc127d0ba
+
+	/// Race wins
+	measure Wins = CALCULATE ( COUNTROWS ( Fact_RaceResults ), Fact_RaceResults[FinalPosition] = 1 )
+		formatString: 0
+		displayFolder: Results
+		lineageTag: 865b554a-2dd9-4d8f-81dd-63612f34db72
+
+	/// Grid minus finish position (pit-lane starts excluded)
+	measure 'Avg Positions Gained' =
+			AVERAGEX (
+				FILTER ( Fact_RaceResults, Fact_RaceResults[GridPosition] > 0 ),
+				Fact_RaceResults[GridPosition] - Fact_RaceResults[FinalPosition]
+			)
+		formatString: +0.0;-0.0;0.0
+		displayFolder: Results
+		lineageTag: 125ffc18-f546-46fa-bf55-3b7204d3c9cd
+
+	/// Official pit stops (Jolpica)
+	measure 'Total Pit Stops' = SUM ( Fact_RaceResults[PitStopsCount] )
+		formatString: 0
+		displayFolder: Results
+		lineageTag: 5801d51d-909b-4459-ac59-21634e556eac
+
+	/// Average lap time in context
+	measure 'Avg Lap Time (s)' = AVERAGE ( Fact_LapTimes[LapTimeSeconds] )
+		formatString: 0.000
+		displayFolder: Lap Times
+		lineageTag: c1aa9710-d160-4620-a56b-ac102dd32018
+
+	/// Fastest lap in context
+	measure 'Best Lap Time (s)' = MIN ( Fact_LapTimes[LapTimeSeconds] )
+		formatString: 0.000
+		displayFolder: Lap Times
+		lineageTag: 64fe4ad4-742d-4d6f-9cdf-9b21b440740e
+
+	/// Fastest lap as m:ss.000
+	measure 'Best Lap' =
+			VAR s = [Best Lap Time (s)]
+			RETURN
+				IF ( NOT ISBLANK ( s ), INT ( s / 60 ) & ":" & FORMAT ( MOD ( s, 60 ), "00.000" ) )
+		displayFolder: Lap Times
+		lineageTag: 6fad470b-3d36-43b2-b4fc-913335986ca8
+
+	/// Clean green-flag laps used for pace & degradation
+	measure 'Representative Laps' = CALCULATE ( COUNTROWS ( Fact_LapTimes ), Fact_LapTimes[IsRepresentative] = TRUE () )
+		formatString: 0
+		displayFolder: Lap Times
+		lineageTag: ae74f1bd-1e3a-4aee-82f8-25ff4201710f
+
+	/// Lap time with the fuel-mass effect removed (empty-tank equivalent)
+	measure 'Avg Fuel-Corrected Lap (s)' = CALCULATE ( AVERAGE ( Fact_LapTimes[FuelCorrectedLapTime] ), Fact_LapTimes[IsRepresentative] = TRUE () )
+		formatString: 0.000
+		displayFolder: Lap Times
+		lineageTag: 3afd0a23-41ba-4f97-9f90-f3e84e24bb4d
+
+	/// Selected driver A
+	measure 'Driver A Name' = SELECTEDVALUE ( 'Driver A'[Driver A], "Select driver A" )
+		displayFolder: Driver Comparison
+		lineageTag: 72ed9f52-f194-4d25-b79e-aa8a2945b536
+
+	/// Average lap time of driver A in the current context
+	measure 'Lap Time A (s)' =
+			IF (
+				HASONEVALUE ( 'Driver A'[DriverID] ),
+				CALCULATE ( [Avg Lap Time (s)], REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver A'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0.000
+		displayFolder: Driver Comparison
+		lineageTag: fedbea58-0407-48cc-92bb-22c083b024ed
+
+	/// Speed of driver A (use Fact_Telemetry[Distance] on the x-axis)
+	measure 'Speed A (km/h)' =
+			IF (
+				HASONEVALUE ( 'Driver A'[DriverID] ),
+				CALCULATE ( AVERAGE ( Fact_Telemetry[Speed] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver A'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0.0
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: bfcfa488-1d92-468f-a3a6-7e1f11b06d52
+
+	/// Throttle of driver A
+	measure 'Throttle A (%)' =
+			IF (
+				HASONEVALUE ( 'Driver A'[DriverID] ),
+				CALCULATE ( AVERAGE ( Fact_Telemetry[Throttle] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver A'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: 24a8d9d1-9756-41f2-9e85-44edf2b64c33
+
+	/// Estimated brake pressure of driver A
+	measure 'Brake Pressure A (%)' =
+			IF (
+				HASONEVALUE ( 'Driver A'[DriverID] ),
+				CALCULATE ( AVERAGE ( Fact_Telemetry[BrakePressurePct] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver A'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: 690fcae5-e2f3-4948-b827-73e2556452be
+
+	/// Lateral G of driver A
+	measure 'G Lat A' =
+			IF (
+				HASONEVALUE ( 'Driver A'[DriverID] ),
+				CALCULATE ( AVERAGE ( Fact_Telemetry[G_Lat] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver A'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0.00
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: cefcb729-b66f-4bd4-9ada-f701cd3f27d6
+
+	/// Selected driver B
+	measure 'Driver B Name' = SELECTEDVALUE ( 'Driver B'[Driver B], "Select driver B" )
+		displayFolder: Driver Comparison
+		lineageTag: 23aafcf1-81da-459b-8ea2-791b2c1c2ef6
+
+	/// Average lap time of driver B in the current context
+	measure 'Lap Time B (s)' =
+			IF (
+				HASONEVALUE ( 'Driver B'[DriverID] ),
+				CALCULATE ( [Avg Lap Time (s)], REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver B'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0.000
+		displayFolder: Driver Comparison
+		lineageTag: b31211e8-b104-4577-b53e-4d5365abd71c
+
+	/// Speed of driver B (use Fact_Telemetry[Distance] on the x-axis)
+	measure 'Speed B (km/h)' =
+			IF (
+				HASONEVALUE ( 'Driver B'[DriverID] ),
+				CALCULATE ( AVERAGE ( Fact_Telemetry[Speed] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver B'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0.0
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: 54134b35-2ea9-4545-90cc-8830d7f0c60e
+
+	/// Throttle of driver B
+	measure 'Throttle B (%)' =
+			IF (
+				HASONEVALUE ( 'Driver B'[DriverID] ),
+				CALCULATE ( AVERAGE ( Fact_Telemetry[Throttle] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver B'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: e2b4309b-fe76-477b-b8d4-2c95d3468c70
+
+	/// Estimated brake pressure of driver B
+	measure 'Brake Pressure B (%)' =
+			IF (
+				HASONEVALUE ( 'Driver B'[DriverID] ),
+				CALCULATE ( AVERAGE ( Fact_Telemetry[BrakePressurePct] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver B'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: 43678c6c-0795-4056-ace9-3f1060f45659
+
+	/// Lateral G of driver B
+	measure 'G Lat B' =
+			IF (
+				HASONEVALUE ( 'Driver B'[DriverID] ),
+				CALCULATE ( AVERAGE ( Fact_Telemetry[G_Lat] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver B'[DriverID] ), Dim_Driver[DriverID] ) )
+			)
+		formatString: 0.00
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: ff77eb1f-5a8a-472d-bc34-e53e038259a8
+
+	/// Lap-time difference A minus B in the current context (positive = A slower). Works per lap, per stint or per race.
+	measure 'Time Delta (s)' =
+			VAR a = [Lap Time A (s)]
+			VAR b = [Lap Time B (s)]
+			RETURN
+				IF ( NOT ISBLANK ( a ) && NOT ISBLANK ( b ), a - b )
+		formatString: +0.000;-0.000;0.000
+		displayFolder: Driver Comparison
+		lineageTag: b0094494-a702-4dbb-b629-4379997b511c
+
+	/// Sector 1 difference A minus B (positive = A slower)
+	measure 'Sector 1 Delta (s)' =
+			VAR a =
+				CALCULATE ( AVERAGE ( Fact_LapTimes[Sector1Time] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver A'[DriverID] ), Dim_Driver[DriverID] ) )
+			VAR b =
+				CALCULATE ( AVERAGE ( Fact_LapTimes[Sector1Time] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver B'[DriverID] ), Dim_Driver[DriverID] ) )
+			RETURN
+				IF ( HASONEVALUE ( 'Driver A'[DriverID] ) && HASONEVALUE ( 'Driver B'[DriverID] ) && NOT ISBLANK ( a ) && NOT ISBLANK ( b ), a - b )
+		formatString: +0.000;-0.000;0.000
+		displayFolder: Driver Comparison
+		lineageTag: 017faa85-7a5a-4b54-9ec5-a5b2ff1df9eb
+
+	/// Sector 2 difference A minus B (positive = A slower)
+	measure 'Sector 2 Delta (s)' =
+			VAR a =
+				CALCULATE ( AVERAGE ( Fact_LapTimes[Sector2Time] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver A'[DriverID] ), Dim_Driver[DriverID] ) )
+			VAR b =
+				CALCULATE ( AVERAGE ( Fact_LapTimes[Sector2Time] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver B'[DriverID] ), Dim_Driver[DriverID] ) )
+			RETURN
+				IF ( HASONEVALUE ( 'Driver A'[DriverID] ) && HASONEVALUE ( 'Driver B'[DriverID] ) && NOT ISBLANK ( a ) && NOT ISBLANK ( b ), a - b )
+		formatString: +0.000;-0.000;0.000
+		displayFolder: Driver Comparison
+		lineageTag: 408750f1-ed5e-4688-acd0-dd4362f5a619
+
+	/// Sector 3 difference A minus B (positive = A slower)
+	measure 'Sector 3 Delta (s)' =
+			VAR a =
+				CALCULATE ( AVERAGE ( Fact_LapTimes[Sector3Time] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver A'[DriverID] ), Dim_Driver[DriverID] ) )
+			VAR b =
+				CALCULATE ( AVERAGE ( Fact_LapTimes[Sector3Time] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver B'[DriverID] ), Dim_Driver[DriverID] ) )
+			RETURN
+				IF ( HASONEVALUE ( 'Driver A'[DriverID] ) && HASONEVALUE ( 'Driver B'[DriverID] ) && NOT ISBLANK ( a ) && NOT ISBLANK ( b ), a - b )
+		formatString: +0.000;-0.000;0.000
+		displayFolder: Driver Comparison
+		lineageTag: 4ee6d967-3cc7-4e08-8e26-793cd10a5893
+
+	/// Speed A minus B at the same track distance
+	measure 'Speed Delta (km/h)' =
+			VAR a = [Speed A (km/h)]
+			VAR b = [Speed B (km/h)]
+			RETURN
+				IF ( NOT ISBLANK ( a ) && NOT ISBLANK ( b ), a - b )
+		formatString: +0.0;-0.0;0.0
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: 21c80b6f-d4f7-45f8-ab49-a26dde4ae421
+
+	/// Classic delta trace: elapsed lap time A minus B at the same distance (positive = A behind). Filter ONE lap per driver, e.g. Fact_Telemetry[IsFastestLap] = TRUE.
+	measure 'Gap Trace (s)' =
+			VAR a =
+				CALCULATE ( AVERAGE ( Fact_Telemetry[ElapsedTime] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver A'[DriverID] ), Dim_Driver[DriverID] ) )
+			VAR b =
+				CALCULATE ( AVERAGE ( Fact_Telemetry[ElapsedTime] ), REMOVEFILTERS ( Dim_Driver ), REMOVEFILTERS ( Dim_Constructor ), TREATAS ( VALUES ( 'Driver B'[DriverID] ), Dim_Driver[DriverID] ) )
+			RETURN
+				IF ( HASONEVALUE ( 'Driver A'[DriverID] ) && HASONEVALUE ( 'Driver B'[DriverID] ) && NOT ISBLANK ( a ) && NOT ISBLANK ( b ), a - b )
+		formatString: +0.000;-0.000;0.000
+		displayFolder: Driver Comparison\Telemetry
+		lineageTag: 5b559dbf-bf65-49f7-9df4-06f60efc7a2c
+
+	/// Average time loss per lap of tyre age: least-squares slope of fuel-corrected lap time vs tyre age, fitted per stint (>= 5 clean laps) and averaged. Put TyreCompound on rows for per-compound rates.
+	measure 'Tyre Degradation Rate (s/lap)' =
+			VAR Stints =
+				CALCULATETABLE (
+					VALUES ( Fact_LapTimes[StintKey] ),
+					Fact_LapTimes[IsRepresentative] = TRUE ()
+				)
+			VAR PerStint =
+				ADDCOLUMNS (
+					Stints,
+					"@n", CALCULATE ( COUNTROWS ( Fact_LapTimes ), Fact_LapTimes[IsRepresentative] = TRUE () ),
+					"@slope",
+						VAR pts =
+							CALCULATETABLE (
+								SELECTCOLUMNS (
+									Fact_LapTimes,
+									"x", Fact_LapTimes[TyreAge],
+									"y", Fact_LapTimes[FuelCorrectedLapTime]
+								),
+								Fact_LapTimes[IsRepresentative] = TRUE ()
+							)
+						VAR xMean = AVERAGEX ( pts, [x] )
+						VAR yMean = AVERAGEX ( pts, [y] )
+						RETURN
+							DIVIDE (
+								SUMX ( pts, ( [x] - xMean ) * ( [y] - yMean ) ),
+								SUMX ( pts, ( [x] - xMean ) ^ 2 )
+							)
+				)
+			RETURN
+				AVERAGEX ( FILTER ( PerStint, [@n] >= 5 ), [@slope] )
+		formatString: 0.000
+		displayFolder: Tyres
+		lineageTag: 214a4de0-a6bc-4bee-aa86-18077fb119d8
+
+	/// Average fuel-corrected loss vs stint baseline, in % (clean laps)
+	measure 'Avg Tyre Deg (%)' = CALCULATE ( AVERAGE ( Fact_LapTimes[TyreDegPct] ), Fact_LapTimes[IsRepresentative] = TRUE () )
+		formatString: 0.00
+		displayFolder: Tyres
+		lineageTag: 5ae95883-6dc9-4ca3-ba06-a449811d29e3
+
+	/// What-if slicer value, else the ETL's race estimate, else 22 s
+	measure 'Pit Loss (s)' =
+			VAR Selected = SELECTEDVALUE ( 'Pit Loss'[Pit Loss (s)] )
+			VAR Estimated = AVERAGE ( Dim_Race[EstPitLossSeconds] )
+			RETURN
+				COALESCE ( Selected, Estimated, 22 )
+		formatString: 0.0
+		displayFolder: Strategy
+		lineageTag: 64d34c6d-6418-4cd6-8f89-af6ebd900d6b
+
+	/// Deg rate of the stint running at the last lap in context; falls back to the field rate for that compound in this race when the stint has < 5 clean laps
+	measure 'Current Stint Deg Rate (s/lap)' =
+			VAR LastLap = MAX ( Fact_LapTimes[LapNumber] )
+			VAR CurStint =
+				CALCULATE ( MAX ( Fact_LapTimes[Stint] ), Fact_LapTimes[LapNumber] = LastLap )
+			VAR CurCompound =
+				CALCULATE ( MAX ( Fact_LapTimes[TyreCompound] ), Fact_LapTimes[LapNumber] = LastLap )
+			VAR DegOwn =
+				CALCULATE ( [Tyre Degradation Rate (s/lap)], Fact_LapTimes[Stint] = CurStint )
+			VAR DegField =
+				CALCULATE (
+					[Tyre Degradation Rate (s/lap)],
+					REMOVEFILTERS ( Dim_Driver ),
+					REMOVEFILTERS ( Dim_Constructor ),
+					Fact_LapTimes[TyreCompound] = CurCompound
+				)
+			RETURN
+				IF ( DegOwn > 0.01, DegOwn, DegField )
+		formatString: 0.000
+		displayFolder: Strategy
+		lineageTag: 42cee831-c09b-403d-a9f3-878a1374c4df
+
+	/// Tyre age at which accumulated degradation loss (d * L^2 / 2) equals the pit loss: L* = SQRT ( 2 * PitLoss / d )
+	measure 'Optimal Tyre Age (laps)' =
+			VAR d = [Current Stint Deg Rate (s/lap)]
+			RETURN
+				IF ( d > 0.01, SQRT ( 2 * [Pit Loss (s)] / d ) )
+		formatString: 0.0
+		displayFolder: Strategy
+		lineageTag: 49e9fc56-8642-4297-90f1-cc575e93b5a6
+
+	/// Race lap at which the current tyre set reaches its optimal age. Needs one race + one driver in context; add a LapNumber 'up to lap N' slicer to replay the race live.
+	measure 'Optimal Pit Lap' =
+			VAR LastLap = MAX ( Fact_LapTimes[LapNumber] )
+			VAR CurStint =
+				CALCULATE ( MAX ( Fact_LapTimes[Stint] ), Fact_LapTimes[LapNumber] = LastLap )
+			VAR StintStart =
+				CALCULATE ( MIN ( Fact_LapTimes[LapNumber] ), Fact_LapTimes[Stint] = CurStint )
+			VAR AgeAtStart =
+				CALCULATE ( MIN ( Fact_LapTimes[TyreAge] ), Fact_LapTimes[Stint] = CurStint )
+			VAR OptimalAge = [Optimal Tyre Age (laps)]
+			RETURN
+				IF (
+					DISTINCTCOUNT ( Fact_LapTimes[RaceID] ) = 1 && DISTINCTCOUNT ( Fact_LapTimes[DriverID] ) = 1 && NOT ISBLANK ( OptimalAge ),
+					ROUND ( StintStart + OptimalAge - AgeAtStart, 0 )
+				)
+		formatString: 0
+		displayFolder: Strategy
+		lineageTag: dd4c906a-9f82-49a2-bef9-43c22ce20a03
+
+	/// +/- 10 % of the optimal tyre age, minimum 2 laps (cost curve is flat near the optimum)
+	measure 'Pit Window Half Width (laps)' =
+			VAR a = [Optimal Tyre Age (laps)]
+			RETURN
+				IF ( NOT ISBLANK ( a ), MAX ( 2, ROUND ( 0.1 * a, 0 ) ) )
+		formatString: 0
+		displayFolder: Strategy
+		lineageTag: 636cbad2-b7a2-4d16-ad59-aa9cb91306a7
+
+	/// First lap of the predicted pit window
+	measure 'Pit Window Open Lap' =
+			VAR o = [Optimal Pit Lap]
+			RETURN
+				IF ( NOT ISBLANK ( o ), MAX ( 1, o - [Pit Window Half Width (laps)] ) )
+		formatString: 0
+		displayFolder: Strategy
+		lineageTag: 328068da-e968-457c-a419-9ea21b9ffd38
+
+	/// Last lap of the predicted pit window
+	measure 'Pit Window Close Lap' =
+			VAR o = [Optimal Pit Lap]
+			VAR TotalLaps = MAX ( Dim_Race[TotalLaps] )
+			RETURN
+				IF ( NOT ISBLANK ( o ), MIN ( TotalLaps, o + [Pit Window Half Width (laps)] ) )
+		formatString: 0
+		displayFolder: Strategy
+		lineageTag: bbdc870b-960e-4285-85e6-fccf93dbcf6c
+
+	/// Pit-wall call based on pace drop-off of the current stint
+	measure 'Predicted Pit Window' =
+			VAR LastLap = MAX ( Fact_LapTimes[LapNumber] )
+			VAR TotalLaps = MAX ( Dim_Race[TotalLaps] )
+			VAR OptLap = [Optimal Pit Lap]
+			VAR OpenLap = [Pit Window Open Lap]
+			VAR CloseLap = [Pit Window Close Lap]
+			RETURN
+				SWITCH (
+					TRUE (),
+					ISBLANK ( OptLap ), "Insufficient data",
+					OpenLap > TotalLaps, "No stop needed - tyres make the flag",
+					CloseLap < LastLap, "Overdue - box now",
+					"Lap " & OpenLap & " - " & CloseLap & "  (optimum L" & OptLap & ")"
+				)
+		displayFolder: Strategy
+		lineageTag: 6c259ac9-bc45-4d08-b2b4-425385dcb71c
+
+	/// Fuel-corrected pace of the last 3 clean laps of the current stint minus its first 3 clean laps
+	measure 'Pace Drop-off (s)' =
+			VAR LastLap = MAX ( Fact_LapTimes[LapNumber] )
+			VAR CurStint =
+				CALCULATE ( MAX ( Fact_LapTimes[Stint] ), Fact_LapTimes[LapNumber] = LastLap )
+			VAR StintLaps =
+				CALCULATETABLE (
+					Fact_LapTimes,
+					Fact_LapTimes[Stint] = CurStint,
+					Fact_LapTimes[IsRepresentative] = TRUE ()
+				)
+			VAR First3 = TOPN ( 3, StintLaps, Fact_LapTimes[LapNumber], ASC )
+			VAR Last3 = TOPN ( 3, StintLaps, Fact_LapTimes[LapNumber], DESC )
+			RETURN
+				IF (
+					DISTINCTCOUNT ( Fact_LapTimes[RaceID] ) = 1 && DISTINCTCOUNT ( Fact_LapTimes[DriverID] ) = 1 && COUNTROWS ( StintLaps ) >= 6,
+					AVERAGEX ( Last3, Fact_LapTimes[FuelCorrectedLapTime] )
+						- AVERAGEX ( First3, Fact_LapTimes[FuelCorrectedLapTime] )
+				)
+		formatString: +0.000;-0.000;0.000
+		displayFolder: Strategy
+		lineageTag: f0ea3d4b-108f-4aa6-b42a-c9eab33ec0f4
+
+	column Value
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 92972200-53e1-42f8-b259-6baf883b7198
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Value]
+
+	partition _Measures = calculated
+		mode: import
+		source = ROW ( "Value", 0 )

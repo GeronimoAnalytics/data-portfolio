@@ -1,0 +1,52 @@
+/// Circuits
+table Dim_Circuit
+	lineageTag: 8cd0937e-b571-4e17-8a42-650ce51fa1f5
+
+	column CircuitID
+		dataType: string
+		isKey
+		lineageTag: fde0ee67-6603-498a-9eac-09a08b79cf51
+		summarizeBy: none
+		sourceColumn: CircuitID
+
+	column CircuitName
+		dataType: string
+		lineageTag: c5bcb181-3acf-4cc7-a0e8-5cdae8af58f2
+		summarizeBy: none
+		sourceColumn: CircuitName
+
+	column Location
+		dataType: string
+		lineageTag: 2ec0cfe0-6fed-42ac-aed6-3e989ed9da08
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: Location
+
+	column Country
+		dataType: string
+		lineageTag: 3cf0afae-0dcf-4ae6-b21c-0a9a95c54349
+		dataCategory: Country
+		summarizeBy: none
+		sourceColumn: Country
+
+	column Latitude
+		dataType: double
+		lineageTag: e9542a5a-bb28-4eac-aeed-e859eb81d046
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: Latitude
+
+	column Longitude
+		dataType: double
+		lineageTag: b1453367-2a15-4574-bd23-9bad14a2aa48
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: Longitude
+
+	partition Dim_Circuit = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document ( File.Contents ( DataFolder & "\Dim_Circuit.parquet" ) )
+				in
+				    Source

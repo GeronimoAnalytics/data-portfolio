@@ -1,0 +1,17 @@
+{
+		"version": "1.0.0.0",
+		"author": {"name":"GeronimoAnalytics","email":"jhalverstad@alfa.nl"},
+		"resources": [
+			{
+				"resourceId": "rId0",
+				"sourceType": 5,
+				"file": "resources/f1pitwall30B203284B264E9DBD0D8EAEDC49A694.pbiviz.json"
+			}
+		],
+		"visual": {"name":"f1PitwallLambiase","displayName":"F1 Pitwall · Lambiase Edition","guid":"f1pitwall30B203284B264E9DBD0D8EAEDC49A694","visualClassName":"Visual","version":"1.0.0.0","description":"Multi-race F1 pitwall: live track replay, timing, telemetry & derived physics, tyre strategy and team radio.","supportUrl":"https://github.com/GeronimoAnalytics/data-portfolio/tree/main/F1-Pitwall","gitHubUrl":"https://github.com/GeronimoAnalytics/data-portfolio/tree/main/F1-Pitwall"},
+		"metadata": {
+			"pbivizjson": {
+				"resourceId": "rId0"
+			}
+		}
+	}

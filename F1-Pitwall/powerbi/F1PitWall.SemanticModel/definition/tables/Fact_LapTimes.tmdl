@@ -1,0 +1,163 @@
+/// One row per driver-lap incl. fuel-corrected tyre degradation
+table Fact_LapTimes
+	lineageTag: 57df39f8-a61f-4005-98d4-c5accdd8c383
+
+	column RaceID
+		dataType: int64
+		isHidden
+		lineageTag: c762df3f-578b-4896-aa03-0cd02722ab22
+		summarizeBy: none
+		sourceColumn: RaceID
+
+	column DriverID
+		dataType: string
+		isHidden
+		lineageTag: 8d18b790-0f45-4a5c-860b-adb059e12c37
+		summarizeBy: none
+		sourceColumn: DriverID
+
+	column ConstructorID
+		dataType: string
+		isHidden
+		lineageTag: 5f09ec01-59a0-45ea-b17b-aee5023d3302
+		summarizeBy: none
+		sourceColumn: ConstructorID
+
+	column LapNumber
+		dataType: int64
+		lineageTag: 597791fe-1dc9-415c-842e-d63a87c38ceb
+		summarizeBy: none
+		sourceColumn: LapNumber
+
+	column LapTimeSeconds
+		dataType: double
+		formatString: 0.000
+		lineageTag: bd871c8d-00c6-4ca9-9c8c-14b8e9b367af
+		summarizeBy: none
+		sourceColumn: LapTimeSeconds
+
+	column Sector1Time
+		dataType: double
+		formatString: 0.000
+		lineageTag: a0debe8e-1963-493a-8d8d-32ad4e1b80ce
+		summarizeBy: none
+		sourceColumn: Sector1Time
+
+	column Sector2Time
+		dataType: double
+		formatString: 0.000
+		lineageTag: 25593a09-ad1e-46eb-8db1-a865d1c48b9c
+		summarizeBy: none
+		sourceColumn: Sector2Time
+
+	column Sector3Time
+		dataType: double
+		formatString: 0.000
+		lineageTag: e7ed4a0c-222a-40c8-bbd1-084c69a024fd
+		summarizeBy: none
+		sourceColumn: Sector3Time
+
+	column TyreCompound
+		dataType: string
+		lineageTag: 2a465aee-ae0e-4348-858a-d1882cf58d07
+		summarizeBy: none
+		sourceColumn: TyreCompound
+
+	column TyreAge
+		dataType: int64
+		lineageTag: 43bb0494-52b4-4ff8-b5fc-ef5eca40c149
+		summarizeBy: none
+		sourceColumn: TyreAge
+
+	column Stint
+		dataType: int64
+		lineageTag: 012a0a5d-0d9a-4d5d-a87b-47bf2d90ca87
+		summarizeBy: none
+		sourceColumn: Stint
+
+	column StintKey
+		dataType: string
+		isHidden
+		lineageTag: 9401966c-fc58-4fe9-a621-ecfe9081e8d0
+		summarizeBy: none
+		sourceColumn: StintKey
+
+	column IsPitInLap
+		dataType: boolean
+		lineageTag: f5b81005-58bf-4752-95a3-948ad49a50ec
+		summarizeBy: none
+		sourceColumn: IsPitInLap
+
+	column IsPitOutLap
+		dataType: boolean
+		lineageTag: b3b97bc2-3c43-458a-bd56-9efe3280a51d
+		summarizeBy: none
+		sourceColumn: IsPitOutLap
+
+	column IsNeutralised
+		dataType: boolean
+		lineageTag: 6c1aba53-189a-4b00-ae83-156438d10dcd
+		summarizeBy: none
+		sourceColumn: IsNeutralised
+
+	column IsRepresentative
+		dataType: boolean
+		lineageTag: c66e5fee-cf2f-49d2-ab6e-f827e593171e
+		summarizeBy: none
+		sourceColumn: IsRepresentative
+
+	column IsFastestLap
+		dataType: boolean
+		lineageTag: 4423d8f1-cfc7-48fd-b4d4-d675e62ee564
+		summarizeBy: none
+		sourceColumn: IsFastestLap
+
+	column FuelLoadKg
+		dataType: double
+		formatString: 0.0
+		lineageTag: fb5f17c1-606a-452a-8ef3-1dc02e076560
+		summarizeBy: none
+		sourceColumn: FuelLoadKg
+
+	column FuelCorrectedLapTime
+		dataType: double
+		formatString: 0.000
+		lineageTag: ea4673dc-f04e-4407-8451-54904649da99
+		summarizeBy: none
+		sourceColumn: FuelCorrectedLapTime
+
+	column StintDegSlope
+		dataType: double
+		formatString: 0.000
+		lineageTag: d498dc93-c894-42ef-9b59-1a73a72f84b1
+		summarizeBy: none
+		sourceColumn: StintDegSlope
+
+	column StintBaseline
+		dataType: double
+		formatString: 0.000
+		lineageTag: a4be4784-348a-4086-b64a-3ad197da06b2
+		summarizeBy: none
+		sourceColumn: StintBaseline
+
+	column TyreDegSeconds
+		dataType: double
+		formatString: 0.000
+		lineageTag: 00201ccf-eb91-4c40-959c-f1118fcf15db
+		summarizeBy: none
+		sourceColumn: TyreDegSeconds
+
+	column TyreDegPct
+		dataType: double
+		formatString: 0.00
+		lineageTag: 66b1bba1-9326-4392-a899-5bfbf3c3ed68
+		summarizeBy: none
+		sourceColumn: TyreDegPct
+
+	partition Fact_LapTimes = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document ( File.Contents ( DataFolder & "\Fact_LapTimes.parquet" ) )
+				in
+				    Source

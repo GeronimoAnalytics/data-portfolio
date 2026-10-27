@@ -1,0 +1,77 @@
+/// Grands Prix (RaceID = Season*100 + Round)
+table Dim_Race
+	lineageTag: 070d741f-0ea8-4b24-8096-1cd92dd43493
+
+	column RaceID
+		dataType: int64
+		isKey
+		lineageTag: a570d678-dddd-407d-9922-d1363415849f
+		summarizeBy: none
+		sourceColumn: RaceID
+
+	column Season
+		dataType: int64
+		lineageTag: 04feedd0-72a0-496e-ae55-7a67fd1ee5a3
+		summarizeBy: none
+		sourceColumn: Season
+
+	column Round
+		dataType: int64
+		lineageTag: 31ef1d84-d5fc-4dfa-aebe-3149f90b8a0c
+		summarizeBy: none
+		sourceColumn: Round
+
+	column RaceName
+		dataType: string
+		lineageTag: f1314157-2e0e-4b9c-9446-5344df96e719
+		summarizeBy: none
+		sourceColumn: RaceName
+
+	column EventDate
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 31b1c904-0d47-47fb-a3a8-a359741da64e
+		summarizeBy: none
+		sourceColumn: EventDate
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CircuitID
+		dataType: string
+		isHidden
+		lineageTag: 16e2bbc2-6817-4f63-82f6-beaefb437b9d
+		summarizeBy: none
+		sourceColumn: CircuitID
+
+	column TotalLaps
+		dataType: int64
+		lineageTag: b2e2135a-c00c-4393-8f71-d294d3493b76
+		summarizeBy: none
+		sourceColumn: TotalLaps
+
+	column EstPitLossSeconds
+		dataType: double
+		formatString: 0.0
+		lineageTag: 57a6d0f2-4e15-4ef2-bbad-cb26528a4dda
+		summarizeBy: none
+		sourceColumn: EstPitLossSeconds
+
+	column HasTiming
+		dataType: boolean
+		lineageTag: f9e821d9-640d-4937-86c7-ce58ecb4dbd5
+		summarizeBy: none
+		sourceColumn: HasTiming
+
+	column RaceLabel = Dim_Race[Season] & " R" & FORMAT ( Dim_Race[Round], "00" ) & " · " & Dim_Race[RaceName]
+		dataType: string
+		lineageTag: 4b2e8006-3b38-4e5f-aeb9-c7d6b39b3814
+		summarizeBy: none
+		sortByColumn: RaceID
+
+	partition Dim_Race = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document ( File.Contents ( DataFolder & "\Dim_Race.parquet" ) )
+				in
+				    Source

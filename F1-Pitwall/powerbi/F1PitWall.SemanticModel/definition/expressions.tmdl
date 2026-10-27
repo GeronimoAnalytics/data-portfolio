@@ -1,0 +1,5 @@
+/// Folder that contains the star-schema Parquet files written by the ETL (data/star). No trailing backslash.
+expression DataFolder = "C:\F1PitWall\data\star" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: f1f1aa0b-0c26-4b97-a0b5-d0449b5e0c89
+
+	annotation PBI_ResultType = Text

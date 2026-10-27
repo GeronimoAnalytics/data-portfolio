@@ -1,0 +1,30 @@
+/// Teams
+table Dim_Constructor
+	lineageTag: 5f1d62e1-ad9d-478b-9053-9556d3b8d1fa
+
+	column ConstructorID
+		dataType: string
+		isKey
+		lineageTag: d65717d9-8190-4b5f-ab74-1c1b76590a2b
+		summarizeBy: none
+		sourceColumn: ConstructorID
+
+	column Name
+		dataType: string
+		lineageTag: 6e02a334-99c7-49c9-ba77-0763e3e84e45
+		summarizeBy: none
+		sourceColumn: Name
+
+	column Nationality
+		dataType: string
+		lineageTag: d38d7b22-bcde-4ccc-94b1-d04346b1b8f1
+		summarizeBy: none
+		sourceColumn: Nationality
+
+	partition Dim_Constructor = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document ( File.Contents ( DataFolder & "\Dim_Constructor.parquet" ) )
+				in
+				    Source

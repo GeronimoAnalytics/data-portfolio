@@ -1,0 +1,47 @@
+/// Drivers (Jolpica driverId as key)
+table Dim_Driver
+	lineageTag: 46692d7b-75b8-44eb-9dc6-20a7096a8af7
+
+	column DriverID
+		dataType: string
+		isKey
+		lineageTag: f4a2f7f6-3183-4721-93b3-d93ba5006fd0
+		summarizeBy: none
+		sourceColumn: DriverID
+
+	column PermanentNumber
+		dataType: int64
+		lineageTag: f7230f8b-33bc-419b-9ada-92f0e150a17a
+		summarizeBy: none
+		sourceColumn: PermanentNumber
+
+	column Code
+		dataType: string
+		lineageTag: e49c05bb-3a8a-4681-959e-5fde4fdbb406
+		summarizeBy: none
+		sourceColumn: Code
+
+	column DriverName
+		dataType: string
+		lineageTag: 08c39237-5009-464b-a569-c997be8620b1
+		summarizeBy: none
+		sourceColumn: DriverName
+
+	column Nationality
+		dataType: string
+		lineageTag: de5dcb91-1e8f-4f03-b17a-83ef1797c0cd
+		summarizeBy: none
+		sourceColumn: Nationality
+
+	column DriverLabel = Dim_Driver[Code] & " · " & Dim_Driver[DriverName]
+		dataType: string
+		lineageTag: 88d81723-b2b9-4ced-89fb-296bb15884c1
+		summarizeBy: none
+
+	partition Dim_Driver = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document ( File.Contents ( DataFolder & "\Dim_Driver.parquet" ) )
+				in
+				    Source

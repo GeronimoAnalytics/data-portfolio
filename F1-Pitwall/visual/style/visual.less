@@ -1,0 +1,367 @@
+// =====================================================================================
+//  PITWALL — Lambiase Edition · glass pitwall theme in a Red Bull Racing palette
+//  Deep navy carbon, glass cards, neon-blue track, racing red + yellow accents.
+//  F1 timing conventions kept: purple = session best, green = personal best, yellow = slower.
+// =====================================================================================
+@import "fonts.less";
+
+@bg:      #040920;
+@navy:    #0B1640;
+@navy-2:  #12205A;
+@red:     #E4002B;
+@red-hi:  #FF2B4F;
+@yellow:  #FFC906;
+@blue:    #3D7BFF;
+@neon:    #5B95FF;
+@green:   #2BE38B;
+@purple:  #B44DFF;
+@amber:   #FF9F1C;
+@text:    #EAF0FF;
+@muted:   #8B9BC6;
+@dim:     #5A6894;
+@line:    rgba(110, 150, 255, 0.16);
+@line-hi: rgba(110, 150, 255, 0.32);
+@font:    'Titillium Web', 'Segoe UI', system-ui, -apple-system, sans-serif;
+@radius:  10px;
+
+.pw-host { width: 100%; height: 100%; }
+
+.pw-root {
+    box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden; user-select: none;
+    color: @text; font: 400 12px/1.3 @font; font-variant-numeric: tabular-nums;
+    background:
+        radial-gradient(1100px 600px at 50% -18%, fade(@navy-2, 85%), transparent 70%),
+        radial-gradient(700px 500px at 105% 105%, fade(@red, 12%), transparent 60%),
+        radial-gradient(600px 500px at -5% 100%, fade(@blue, 10%), transparent 60%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0 2px, transparent 2px 6px),
+        @bg;
+    *, *::before, *::after { box-sizing: border-box; }
+    button, select, input { font-family: inherit; }
+    h1, h2 { margin: 0; }
+}
+.num { font-variant-numeric: tabular-nums; }
+.dim { color: @dim; } .warn { color: @amber; } .purple { color: @purple !important; }
+.r { text-align: right; } .c { text-align: center; }
+.pw-sub { font: 600 11px/1 @font; color: @muted; text-transform: none; letter-spacing: 0; }
+.pw-label { font: 600 11px/1.2 @font; color: @muted; }
+.pw-empty { position: absolute; inset: 0; display: grid; place-items: center; color: @dim; font: 600 12px/1 @font; pointer-events: none; }
+.pw-layer { position: absolute; inset: 0; display: block; }
+.pw-ax { font: 600 10px @font; fill: @muted; &--hi { fill: #fff; font-weight: 700; } }
+
+// ------------------------------------------------------------------ header
+.pw-header { flex: 0 0 auto; padding: 8px 12px 0; }
+.pw-header__bar {
+    display: flex; align-items: center; gap: 16px; height: 58px; padding: 0 14px;
+    background: linear-gradient(180deg, fade(@navy-2, 70%), fade(@navy, 55%));
+    border: 1px solid @line; border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 10px 30px rgba(0,0,0,0.35);
+    backdrop-filter: blur(10px);
+}
+.pw-brand { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; min-width: 200px;
+    &__mark { display: flex; gap: 3px; transform: skewX(-18deg);
+        i { display: block; width: 7px; height: 28px; border-radius: 1px; background: @red; box-shadow: 0 0 12px fade(@red, 60%); }
+        i + i { background: @yellow; box-shadow: 0 0 12px fade(@yellow, 50%); } }
+    &__text { display: flex; flex-direction: column; line-height: 1;
+        b { font: italic 900 22px/1 @font; letter-spacing: 0.02em; color: #fff; }
+        span { margin-top: 3px; font: 700 8.5px/1 @font; letter-spacing: 0.22em; color: @yellow; } }
+}
+.pw-tabs { flex: 1 1 auto; display: flex; justify-content: center; gap: 4px; min-width: 0; overflow: hidden;
+    button {
+        position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+        min-width: 86px; height: 50px; padding: 4px 10px; cursor: pointer;
+        background: transparent; border: 1px solid transparent; border-radius: 9px; color: @muted;
+        font: 600 10.5px/1 @font; letter-spacing: 0.04em; transition: all .18s;
+        svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+        em { font: 600 8.5px/1 @font; font-style: normal; color: @yellow; letter-spacing: 0.06em; }
+        &:hover { color: @text; background: rgba(110,150,255,0.07); }
+        &.is-on {
+            color: #fff; border-color: @line-hi;
+            background: linear-gradient(180deg, fade(@blue, 26%), fade(@blue, 6%));
+            box-shadow: inset 0 0 18px fade(@blue, 25%), 0 0 18px fade(@blue, 18%);
+            svg { stroke: @neon; filter: drop-shadow(0 0 4px @neon); }
+            &::after { content: ""; position: absolute; left: 18%; right: 18%; bottom: -1px; height: 2px; border-radius: 2px; background: @red; box-shadow: 0 0 10px @red; }
+        }
+    }
+}
+.pw-restroom {
+    flex: 0 0 auto; cursor: pointer; height: 32px; padding: 0 12px; border-radius: 16px;
+    background: fade(@yellow, 8%); color: @yellow; border: 1px solid fade(@yellow, 45%);
+    font: 700 11px/1 @font; letter-spacing: 0.02em; transition: all .18s;
+    &:hover { background: fade(@yellow, 16%); box-shadow: 0 0 14px fade(@yellow, 25%); }
+    &.is-on { background: @yellow; color: @navy; }
+}
+.pw-titlerow { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; padding: 10px 4px 2px;
+    h1 { font: 700 21px/1.1 @font; letter-spacing: 0.01em; color: #fff; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        span { font-weight: 400; color: @text; } }
+}
+.pw-pickers { display: flex; gap: 8px; flex: 0 0 auto; }
+.pw-pick { display: flex; flex-direction: column; gap: 3px;
+    span { font: 600 9.5px/1 @font; color: @muted; letter-spacing: 0.06em; text-transform: uppercase; }
+    select {
+        appearance: none; -webkit-appearance: none; cursor: pointer; min-width: 74px; height: 28px; padding: 0 26px 0 10px;
+        color: #fff; font: 700 12px/1 @font; border-radius: 7px; border: 1px solid @line-hi;
+        background: fade(@navy, 80%) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='9' height='6'><path d='M0 0h9L4.5 6z' fill='%238B9BC6'/></svg>") no-repeat right 9px center;
+        &:hover, &:focus { outline: none; border-color: @neon; box-shadow: 0 0 0 2px fade(@blue, 25%); }
+        option { background: @navy; }
+    }
+    &--wide select { min-width: 170px; }
+    &--a select { border-color: fade(@red-hi, 60%); box-shadow: inset 3px 0 0 @red-hi; }
+    &--b select { border-color: fade(@yellow, 55%); box-shadow: inset 3px 0 0 @yellow; }
+}
+
+// ------------------------------------------------------------------ grid & cards
+.pw-grid { flex: 1 1 auto; min-height: 0; display: grid; gap: 10px; padding: 8px 12px; }
+.pw-card {
+    position: relative; min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
+    border-radius: @radius; border: 1px solid @line;
+    background: linear-gradient(180deg, rgba(22, 38, 96, 0.55), rgba(8, 15, 44, 0.72));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 30px rgba(61,123,255,0.04), 0 14px 34px rgba(0,0,0,0.38);
+    backdrop-filter: blur(10px);
+    &__head { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px 6px;
+        h2 { font: 700 13px/1.1 @font; letter-spacing: 0.03em; text-transform: uppercase; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            .pw-sub { margin-left: 6px; } } }
+    &__right { display: flex; align-items: center; gap: 10px; flex: 0 1 auto; min-width: 0; }
+    &__body { position: relative; flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+    &--flush { padding: 0; }
+}
+.pw-legend { display: inline-flex; align-items: center; gap: 5px; font: 700 11px/1 @font; color: @text; white-space: nowrap;
+    i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    b { color: @muted; font-weight: 600; }
+    &--delta b { color: #fff; } }
+.pw-chips { display: inline-flex; padding: 2px; gap: 2px; border-radius: 8px; background: rgba(4,9,32,0.6); border: 1px solid @line;
+    button { border: 0; background: transparent; color: @muted; font: 600 11px/1 @font; padding: 6px 10px; border-radius: 6px; cursor: pointer; white-space: nowrap;
+        &:hover { color: #fff; }
+        &.is-on { color: #fff; background: linear-gradient(180deg, fade(@red, 85%), fade(@red, 60%)); box-shadow: 0 0 12px fade(@red, 45%); } } }
+.pw-chart { position: relative; flex: 1 1 auto; min-height: 0; padding: 0 6px 4px; }
+
+// ------------------------------------------------------------------ track map
+.pw-card--track { background: radial-gradient(80% 70% at 45% 55%, rgba(30, 60, 160, 0.25), transparent 70%), linear-gradient(180deg, rgba(22,38,96,0.5), rgba(8,15,44,0.75)); }
+.pw-trackmap { position: relative; flex: 1 1 auto; min-height: 0; cursor: crosshair; }
+.pw-trackinfo {
+    position: absolute; top: 12px; right: 12px; z-index: 2; min-width: 150px; padding: 10px 12px; pointer-events: none;
+    background: rgba(4, 9, 32, 0.72); border: 1px solid @line-hi; border-radius: 8px; box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+    b { display: block; font: 700 13px/1.2 @font; color: #fff; margin-bottom: 6px; }
+    dl { display: grid; grid-template-columns: auto auto; gap: 2px 12px; margin: 0; }
+    dt { font: 600 11.5px/1.35 @font; color: @muted; text-transform: uppercase; }
+    dd { margin: 0; font: 700 12px/1.35 @font; color: #fff; text-align: right; }
+    &__secs { margin-top: 6px !important; padding-top: 6px; border-top: 1px solid @line; }
+}
+.pw-sectxt { &--purple { color: @purple !important; } &--green { color: @green !important; } &--yellow { color: @yellow !important; } }
+.pw-trackfoot { position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    &__meta { font: 600 11px/1 @font; color: @muted; } }
+.pw-trackmap.is-compact .pw-trackinfo { top: 8px; right: 8px; min-width: 128px; padding: 8px 10px; b { font-size: 12px; } }
+
+// ------------------------------------------------------------------ race order & tyre life
+@order-cols: 22px minmax(70px, 1.2fr) 66px minmax(54px, 1fr) 62px 74px;
+@timing-cols: 22px minmax(70px, 1.1fr) 62px minmax(40px, 0.8fr) 70px 58px 66px 54px 62px;
+.pw-order { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; padding: 0 8px 6px;
+    &__head, &__row { display: grid; grid-template-columns: @order-cols; column-gap: 8px; align-items: center; padding: 0 6px; }
+    &.is-timing { .pw-order__head, .pw-order__row { grid-template-columns: @timing-cols; } }
+    &__head { height: 22px; font: 600 10.5px/1 @font; color: @muted; border-bottom: 1px solid @line; }
+    &__body { flex: 1 1 auto; overflow-y: auto; overflow-x: hidden;
+        &::-webkit-scrollbar { width: 4px; } &::-webkit-scrollbar-thumb { background: @line-hi; border-radius: 2px; } }
+    &__row { min-height: 25px; flex: 1 0 25px; max-height: 32px; cursor: pointer; border-radius: 6px; font: 600 12.5px/1 @font; transition: background .2s;
+        &:hover { background: rgba(110,150,255,0.08); }
+        &.is-focus { background: linear-gradient(90deg, fade(@red-hi, 28%), fade(@red-hi, 4%)); box-shadow: inset 2px 0 0 @red-hi; }
+        &.is-compare { background: linear-gradient(90deg, fade(@yellow, 20%), fade(@yellow, 3%)); box-shadow: inset 2px 0 0 @yellow; }
+        &.is-out { opacity: 0.45; } }
+    &__body { display: flex; flex-direction: column; }
+    &__pos { font-weight: 700; color: @muted; }
+    &__drv { display: flex; align-items: center; gap: 7px; min-width: 0;
+        i { width: 3px; height: 15px; border-radius: 2px; flex: 0 0 auto; }
+        b { font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
+    &__tyre { display: flex; align-items: center; gap: 6px; b { font-weight: 900; width: 10px; } span { color: @muted; font-weight: 600; font-size: 11.5px; } }
+    &__life { height: 7px; border-radius: 4px; background: rgba(255,255,255,0.07); overflow: hidden;
+        i { display: block; height: 100%; border-radius: 4px; box-shadow: 0 0 8px currentColor; transition: width .4s; } }
+}
+.pw-pill { font: 700 9px/1 @font; font-style: normal; padding: 2px 5px; border-radius: 3px; letter-spacing: 0.04em;
+    &--pit { background: @blue; color: #fff; } &--out { background: @red; color: #fff; } }
+.pw-secs { display: flex; gap: 3px; justify-content: center; }
+.pw-sec { width: 14px; height: 5px; border-radius: 2px; background: rgba(255,255,255,0.12); opacity: 0.5;
+    &.is-live { opacity: 1; }
+    &--purple { background: @purple; } &--green { background: @green; } &--yellow { background: @yellow; } }
+
+// ------------------------------------------------------------------ pit window
+.pw-card--pit .pw-badges { padding: 0 14px 4px; }
+.pw-badges { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 14px; }
+.pw-badge { font: 700 10px/1 @font; letter-spacing: 0.06em; padding: 5px 8px; border-radius: 5px; border: 1px solid; text-transform: uppercase;
+    &--ok { color: @green; border-color: fade(@green, 50%); background: fade(@green, 10%); }
+    &--warn { color: @amber; border-color: fade(@amber, 55%); background: fade(@amber, 10%); }
+    &--alert { color: #fff; border-color: @red; background: fade(@red, 75%); box-shadow: 0 0 14px fade(@red, 50%); animation: pw-alert 1.1s ease-in-out infinite; }
+    &--info { color: @muted; border-color: @line-hi; } }
+@keyframes pw-alert { 50% { box-shadow: 0 0 22px @red; } }
+.pw-pitwin { flex: 1 1 auto; min-height: 0; display: flex; gap: 10px; padding: 0 10px 8px 4px;
+    &__chart { position: relative; flex: 1 1 auto; min-width: 0; }
+    &__side { flex: 0 0 132px; display: flex; flex-direction: column; gap: 6px; }
+}
+.pw-fuel { div:first-of-type { display: flex; align-items: baseline; justify-content: space-between; margin-top: 3px; }
+    b { font: 700 16px/1 @font; color: #fff; } em { font: 700 12px/1 @font; font-style: normal; color: @muted; } }
+.pw-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); margin-top: 5px; overflow: hidden;
+    i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, @blue, @neon); box-shadow: 0 0 10px @blue; } }
+.pw-plans { display: flex; flex-direction: column; gap: 3px; min-height: 0; overflow: hidden; }
+.pw-plan { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 4px 7px; border-radius: 6px; border: 1px solid @line; background: rgba(4,9,32,0.45);
+    b { font: 700 11px/1.2 @font; color: @text; white-space: nowrap; } span { font: 600 10.5px/1.2 @font; color: @muted; white-space: nowrap; }
+    &.is-best { border-color: fade(@blue, 80%); background: linear-gradient(180deg, fade(@blue, 26%), fade(@blue, 8%)); box-shadow: 0 0 12px fade(@blue, 25%); b { color: #fff; } } }
+.pw-pitwin.is-compact .pw-pitwin__side { flex-basis: 120px; }
+
+// ------------------------------------------------------------------ comparison bars
+.pw-bars { flex: 1 1 auto; min-height: 0; display: flex; gap: 10px; padding: 4px 14px 10px; }
+.pw-bars__group { flex: 1 1 0; display: flex; flex-direction: column; min-width: 0; }
+.pw-bars__plot { position: relative; flex: 1 1 auto; display: flex; align-items: flex-end; justify-content: center; gap: 6px; padding-top: 16px; border-bottom: 1px solid @line-hi; }
+.pw-bars__bar { position: relative; width: 38%; max-width: 30px; border-radius: 4px 4px 0 0;
+    background: linear-gradient(180deg, var(--c), fade(#0B1640, 30%)); border: 1px solid var(--c); border-bottom: 0;
+    box-shadow: 0 0 14px -2px var(--c), inset 0 0 12px rgba(255,255,255,0.08); transition: height .5s;
+    span { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font: 700 10.5px/1 @font; color: #fff; white-space: nowrap; } }
+.pw-bars__label { margin-top: 5px; text-align: center; font: 700 11px/1.2 @font; color: @text; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    em { display: block; font: 600 9.5px/1.2 @font; font-style: normal; color: @muted; } }
+
+// ------------------------------------------------------------------ stints (tyres tab)
+.pw-stints { flex: 1 1 auto; overflow-y: auto; padding: 0 14px 22px; position: relative; display: flex; flex-direction: column; gap: 3px; }
+.pw-stints__row { display: grid; grid-template-columns: 22px 46px 1fr; align-items: center; gap: 8px; min-height: 20px; flex: 1 0 20px; max-height: 28px; cursor: pointer; border-radius: 5px;
+    &.is-focus { background: fade(@red-hi, 14%); } &.is-compare { background: fade(@yellow, 10%); } }
+.pw-stints__pos { font: 700 11px/1 @font; color: @muted; }
+.pw-stints__drv { display: flex; align-items: center; gap: 5px; font: 700 11.5px/1 @font; i { width: 3px; height: 13px; border-radius: 2px; } }
+.pw-stints__track { position: relative; height: 14px; border-radius: 7px; background: rgba(255,255,255,0.04);
+    i { position: absolute; top: 0; bottom: 0; border-radius: 7px; display: flex; align-items: center; gap: 4px; padding: 0 6px; overflow: hidden;
+        background: linear-gradient(90deg, fade(#000, 20%), transparent), var(--c); box-shadow: 0 0 8px -2px var(--c); border-right: 2px solid @bg;
+        b { font: 900 9.5px/1 @font; color: @navy; } span { font: 700 9px/1 @font; color: fade(@navy, 80%); } } }
+.pw-stints__axis { position: relative; height: 14px; margin-left: 84px; span { position: absolute; transform: translateX(-50%); font: 600 10px/1 @font; color: @muted; } }
+
+// ------------------------------------------------------------------ telemetry
+.pw-tele { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0;
+    &__body { flex: 1 1 auto; display: flex; min-height: 0; padding: 0 6px 6px; }
+    &__chart { position: relative; flex: 1 1 auto; min-width: 0; cursor: crosshair; }
+    &__gg { flex: 0 0 auto; width: 28%; max-width: 260px; display: flex; flex-direction: column; gap: 4px; padding: 4px 8px; border-left: 1px solid @line;
+        &.is-hidden { display: none; } }
+    &__ggcanvas { position: relative; flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+}
+
+// ------------------------------------------------------------------ strategy chart (pit stop tab)
+.pw-strategy { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0;
+    &__chart { position: relative; flex: 1 1 auto; min-height: 80px; margin: 0 6px; } }
+.pw-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); gap: 6px; padding: 4px 14px 6px; }
+.pw-tile { background: rgba(4,9,32,0.5); border: 1px solid @line; border-radius: 7px; padding: 7px 8px 6px; display: flex; flex-direction: column; gap: 3px; min-width: 0;
+    .pw-kicker { font: 600 10px/1 @font; color: @muted; }
+    b { font: 700 16px/1 @font; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    em { font: 600 9.5px/1.1 @font; font-style: normal; color: @dim; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; &.is-link { color: @yellow; cursor: pointer; } }
+    &.is-open { border-color: @green; b { color: @green; } } &.is-overdue { border-color: @red-hi; b { color: @red-hi; } } &.is-pending b { color: @yellow; } }
+.pw-kicker { font: 600 10px/1 @font; color: @muted; }
+.pw-stepper { display: flex; align-items: center; justify-content: space-between; gap: 4px; b { font-size: 13px; }
+    button { width: 18px; height: 18px; border-radius: 4px; border: 1px solid @line-hi; background: transparent; color: #fff; cursor: pointer; font: 700 12px/1 @font; padding: 0;
+        &:hover { border-color: @yellow; color: @yellow; } } }
+.pw-stintbar { position: relative; height: 14px; margin: 4px 16px 10px 46px; border-radius: 7px; background: rgba(255,255,255,0.05);
+    i { position: absolute; top: 0; bottom: 0; border-radius: 7px; font: 900 9px/14px @font; font-style: normal; color: @navy; text-align: center; overflow: hidden; border-right: 2px solid @bg; }
+    u { position: absolute; top: -3px; bottom: -3px; border-radius: 4px; border: 1px solid @neon; background: fade(@blue, 18%); }
+    b { position: absolute; top: -4px; bottom: -4px; width: 2px; background: #fff; box-shadow: 0 0 6px #fff; } }
+
+// ------------------------------------------------------------------ bottom bar
+.pw-bottom { flex: 0 0 auto; height: 126px; display: flex; gap: 10px; padding: 0 12px 10px;
+    &__lambiase { flex: 0 0 22%; } &__timeline { flex: 1 1 auto; } &__radio { flex: 0 0 25%; } }
+.pw-lambiase { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 9px 12px;
+    h2 { font: 700 13px/1 @font; text-transform: uppercase; color: #fff; span { font-weight: 400; text-transform: none; color: @text; } }
+    &__body { flex: 1 1 auto; display: flex; align-items: center; gap: 12px; min-height: 0; }
+    &__calls { flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+    &__team { display: none; }
+}
+.pw-avatar { position: relative; flex: 0 0 auto; width: 54px; height: 54px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: var(--team);
+    background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--team) 70%, white 10%), color-mix(in srgb, var(--team) 40%, #040920) 70%);
+    border: 2px solid var(--team); box-shadow: 0 0 16px -2px var(--team), inset 0 0 12px rgba(0,0,0,0.4);
+    b { font: italic 900 17px/1 @font; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.6); }
+    span { font: 700 10px/1 @font; color: #fff; opacity: 0.85; } }
+.pw-call { display: block; padding: 4px 9px; border-radius: 6px; font: 700 11.5px/1.1 @font; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border: 1px solid;
+    &--primary { color: #fff; border-color: @red-hi; background: linear-gradient(180deg, fade(@red, 55%), fade(@red, 25%)); box-shadow: 0 0 12px -2px @red; }
+    &--plan { color: #fff; border-color: fade(@blue, 80%); background: linear-gradient(180deg, fade(@blue, 35%), fade(@blue, 12%)); }
+    &--watch { color: @text; border-color: @line-hi; background: rgba(4,9,32,0.5); } }
+
+.pw-timeline { display: flex; flex-direction: column; height: 100%; padding: 8px 12px 4px;
+    &__head { display: flex; align-items: center; gap: 12px;
+        h2 { font: 700 13px/1 @font; text-transform: uppercase; color: #fff; } }
+    &__lap { font: 600 12px/1 @font; color: @muted; b { font-size: 16px; color: #fff; } }
+    &__clock { font: 600 12px/1 @font; color: @muted; }
+    &__plot { position: relative; flex: 1 1 auto; min-height: 0; cursor: pointer; touch-action: none; }
+}
+.pw-tl-label { font: 700 11px @font; fill: #fff; }
+.pw-tl-red { font: 700 11px @font; fill: @red-hi; }
+.pw-tl-tick { font: 600 10px @font; fill: @muted; }
+.pw-transport { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+.pw-tbtn { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; background: rgba(4,9,32,0.6); border: 1px solid @line-hi; color: #fff;
+    svg { width: 11px; height: 11px; fill: currentColor; }
+    &:hover { border-color: @neon; box-shadow: 0 0 10px fade(@blue, 40%); }
+    &--play { width: 34px; height: 34px; background: linear-gradient(180deg, @red-hi, @red); border-color: @red-hi; box-shadow: 0 0 16px fade(@red, 55%);
+        svg { width: 13px; height: 13px; } &.is-playing { background: rgba(4,9,32,0.6); color: @red-hi; } } }
+.pw-speed { display: inline-flex; gap: 2px; padding: 2px; border-radius: 14px; background: rgba(4,9,32,0.6); border: 1px solid @line;
+    button { border: 0; background: transparent; color: @muted; font: 700 10.5px/1 @font; padding: 5px 7px; border-radius: 10px; cursor: pointer;
+        &:hover { color: #fff; } &.is-on { background: @yellow; color: @navy; } } }
+
+// ------------------------------------------------------------------ radio
+.pw-radio { display: flex; flex-direction: column; height: 100%; padding: 9px 12px 10px;
+    h2 { display: flex; align-items: baseline; gap: 6px; font: 700 13px/1 @font; color: #fff;
+        span { font-weight: 400; color: @text; } }
+    &__body { flex: 1 1 auto; display: flex; gap: 10px; min-height: 0; margin-top: 7px; }
+    &__side { flex: 1 1 auto; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+    &__meta { font: 600 10px/1 @font; color: @dim; }
+}
+.pw-onair { margin-left: auto; font: 700 10px/1 @font; font-style: normal; color: @dim; text-transform: uppercase; letter-spacing: 0.08em;
+    &.is-on { color: @red-hi; text-shadow: 0 0 8px @red; &::before { content: "● "; } } }
+.pw-revlights { display: flex; gap: 3px; }
+.pw-led { flex: 1 1 0; height: 7px; border-radius: 3px; background: rgba(255,255,255,0.07);
+    &.is-lit { background: var(--led); box-shadow: 0 0 8px var(--led); } }
+.pw-radiobtn {
+    flex: 0 0 auto; width: 104px; height: 100%; max-height: 120px; min-height: 64px; border-radius: 10px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 4px; color: #fff;
+    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.14), transparent 50%), linear-gradient(160deg, #20307A, #0A1440 75%);
+    border: 1px solid @line-hi; box-shadow: 0 4px 0 #02051A, 0 8px 18px rgba(0,0,0,0.5), inset 0 0 0 2px fade(@red, 70%);
+    transition: transform .08s, box-shadow .2s;
+    &:hover { box-shadow: 0 4px 0 #02051A, 0 8px 18px rgba(0,0,0,0.5), inset 0 0 0 2px @yellow, 0 0 18px fade(@yellow, 25%); }
+    &:active { transform: translateY(3px); box-shadow: 0 1px 0 #02051A, inset 0 0 0 2px @red; }
+    &__label { font: italic 900 13px/1 @font; letter-spacing: 0.02em; text-align: center; white-space: nowrap; }
+    &__sub { font: 600 8.5px/1.1 @font; color: @muted; text-align: center; }
+}
+.pw-radio.is-live .pw-radiobtn { animation: pw-radio-pulse .7s ease-in-out infinite; }
+@keyframes pw-radio-pulse { 50% { box-shadow: 0 4px 0 #02051A, 0 0 26px 4px fade(@red, 55%), inset 0 0 0 2px @yellow; } }
+.pw-eq { position: relative; flex: 1 1 auto; min-height: 26px; border-radius: 6px; background: rgba(4,9,32,0.55); border: 1px solid @line; overflow: hidden; }
+
+// ------------------------------------------------------------------ restroom (portrait)
+.pw-root.is-restroom { align-items: center; overflow-y: auto; overflow-x: hidden; }
+.pw-phone { width: min(440px, 100%); display: flex; flex-direction: column; gap: 10px; padding: 0 0 16px;
+    .pw-header { padding: 8px 8px 0; }
+    .pw-header__bar { height: auto; flex-wrap: wrap; padding: 6px; gap: 6px; }
+    .pw-tabs { order: 2; width: 100%; justify-content: space-between; gap: 2px;
+        button { min-width: 0; flex: 1 1 0; height: 52px; padding: 4px 2px; font-size: 8.5px; span { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; } em { display: block; } } }
+    .pw-restroom { order: 1; margin-left: auto; height: 26px; font-size: 10px; }
+    .pw-titlerow { flex-direction: column; align-items: stretch; padding: 8px 2px 0; h1 { font-size: 17px; white-space: normal; } }
+    .pw-pickers { flex-wrap: wrap; .pw-pick { flex: 1 1 40%; select { width: 100%; min-width: 0; } } }
+    > .pw-card { margin: 0 8px; flex: 0 0 auto; }
+    .pw-m-track { height: 330px; }
+    .pw-m-pit { height: 250px; } .pw-m-wear, .pw-m-pace { height: 220px; } .pw-m-compare { height: 210px; }
+    .pw-m-trace { height: 230px; } .pw-m-stratchart { height: 420px; } .pw-m-positions { height: 360px; } .pw-m-stints { height: 520px; }
+    .pw-m-timeline { height: 118px; } .pw-m-lambiase { height: 128px; } .pw-m-radio { height: 120px; }
+    .pw-m-order .pw-order__row { min-height: 27px; flex-basis: 27px; }
+    .pw-order__head, .pw-order__row { grid-template-columns: 18px minmax(64px, 1.2fr) 58px minmax(36px, 0.8fr) 58px 50px; column-gap: 6px; }
+    .pw-timeline__head { gap: 8px; } .pw-speed button { padding: 5px 5px; }
+    .pw-m-lambiase .pw-lambiase__team { display: block; font: 600 10px/1 @font; color: @dim; }
+    .pw-bars__bar { max-width: 24px; }
+}
+
+// ------------------------------------------------------------------ landing / loading
+.pw-landing { width: 100%; height: 100%; display: grid; place-items: center; color: @text; font: 400 13px/1.5 @font;
+    background: radial-gradient(800px 500px at 50% 0%, @navy-2, @bg 70%); }
+.pw-landing__card { max-width: 460px; padding: 24px 28px; display: grid; gap: 10px; border-radius: 12px; border: 1px solid @line-hi; background: rgba(8,15,44,0.8);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 2px 0 @red;
+    .pw-brand__text { line-height: 1; b { font: italic 900 26px/1 @font; color: #fff; display: block; } span { font: 700 9px/1 @font; letter-spacing: 0.22em; color: @yellow; } }
+    p { margin: 0; } code { color: @yellow; } .warn { color: @amber; } .dim { color: @muted; } }
+.pw-loading { height: 3px; border-radius: 2px; background: @line; overflow: hidden;
+    i { display: block; width: 30%; height: 100%; background: linear-gradient(90deg, @red, @yellow); animation: pw-load 1.1s ease-in-out infinite; } }
+@keyframes pw-load { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+
+// ------------------------------------------------------------------ responsive header
+@media (max-width: 1280px) {
+    .pw-tabs button { min-width: 0; padding: 4px 8px; span { display: none; } em { display: none; } }
+    .pw-pick--wide select { min-width: 130px; }
+}
+@media (max-width: 980px) {
+    .pw-brand { min-width: 0; .pw-brand__text span { display: none; } }
+    .pw-titlerow h1 { font-size: 16px; }
+    .pw-bottom__lambiase { display: none; }
+}

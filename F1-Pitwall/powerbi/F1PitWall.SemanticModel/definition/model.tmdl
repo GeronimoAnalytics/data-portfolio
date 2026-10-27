@@ -1,0 +1,27 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: nl-NL
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["DataFolder","Dim_Driver","Dim_Constructor","Dim_Circuit","Dim_Race","Fact_RaceResults","Fact_LapTimes","Fact_Telemetry","Fact_VisualFeed"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table _Measures
+ref table Dim_Driver
+ref table Dim_Constructor
+ref table Dim_Circuit
+ref table Dim_Race
+ref table Fact_RaceResults
+ref table Fact_LapTimes
+ref table Fact_Telemetry
+ref table Fact_VisualFeed
+ref table 'Driver A'
+ref table 'Driver B'
+ref table 'Pit Loss'

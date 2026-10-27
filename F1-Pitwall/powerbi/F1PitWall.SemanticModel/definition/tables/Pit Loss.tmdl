@@ -1,0 +1,16 @@
+/// What-if parameter: time lost for a pit stop (pit-lane transit + stationary time) in seconds.
+/// No selection -> the ETL's per-race estimate (Dim_Race[EstPitLossSeconds]) is used.
+table 'Pit Loss'
+	lineageTag: ee3068eb-ed13-4f73-8043-838a0c954ff8
+
+	column 'Pit Loss (s)'
+		dataType: double
+		formatString: 0.0
+		lineageTag: caef4c01-a55e-4d31-adb1-55f7e9c5a4ae
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Pit Loss (s)]
+
+	partition 'Pit Loss' = calculated
+		mode: import
+		source = SELECTCOLUMNS ( GENERATESERIES ( 15, 35, 0.5 ), "Pit Loss (s)", [Value] )

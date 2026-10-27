@@ -1,0 +1,81 @@
+/// One row per driver per Grand Prix
+table Fact_RaceResults
+	lineageTag: 51f79d39-1e35-4125-aa62-c500a8a051e0
+
+	column ResultID
+		dataType: int64
+		isHidden
+		lineageTag: 3cd7a330-c699-42dd-8bbb-bbdde3fa17b5
+		summarizeBy: none
+		sourceColumn: ResultID
+
+	column RaceID
+		dataType: int64
+		isHidden
+		lineageTag: bfe792c1-6145-44d4-ae78-6397be3c6893
+		summarizeBy: none
+		sourceColumn: RaceID
+
+	column DriverID
+		dataType: string
+		isHidden
+		lineageTag: ed1b7a1c-6310-40cb-89ce-782ec6f51ffe
+		summarizeBy: none
+		sourceColumn: DriverID
+
+	column ConstructorID
+		dataType: string
+		isHidden
+		lineageTag: 63be22fb-a117-4dfc-83e9-2bb9c7b10f54
+		summarizeBy: none
+		sourceColumn: ConstructorID
+
+	column GridPosition
+		dataType: int64
+		lineageTag: 8ca68321-53eb-4052-b0c7-54ac89d94dc8
+		summarizeBy: none
+		sourceColumn: GridPosition
+
+	column FinalPosition
+		dataType: int64
+		lineageTag: 0b179ec0-d50c-4320-980e-fb29bad07df3
+		summarizeBy: none
+		sourceColumn: FinalPosition
+
+	column PositionText
+		dataType: string
+		lineageTag: 1c0bf998-b01a-40a0-86d4-96ef9fe16c6c
+		summarizeBy: none
+		sourceColumn: PositionText
+
+	column Points
+		dataType: double
+		lineageTag: 1c56994f-79f6-4c0a-9379-cc45e481e704
+		summarizeBy: sum
+		sourceColumn: Points
+
+	column Status
+		dataType: string
+		lineageTag: e38869c7-e40b-4bdb-a4fc-87e655ff7c9a
+		summarizeBy: none
+		sourceColumn: Status
+
+	column LapsCompleted
+		dataType: int64
+		lineageTag: 3be87247-cdaa-4d68-82c3-f98c121851dc
+		summarizeBy: none
+		sourceColumn: LapsCompleted
+
+	column PitStopsCount
+		dataType: int64
+		lineageTag: affabf13-e240-46f0-ae01-687afdc2bb3a
+		summarizeBy: sum
+		sourceColumn: PitStopsCount
+
+	partition Fact_RaceResults = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document ( File.Contents ( DataFolder & "\Fact_RaceResults.parquet" ) )
+				in
+				    Source

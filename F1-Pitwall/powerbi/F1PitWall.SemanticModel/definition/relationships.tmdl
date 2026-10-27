@@ -1,0 +1,43 @@
+relationship Fact_RaceResults_RaceID__Dim_Race
+	fromColumn: Fact_RaceResults.RaceID
+	toColumn: Dim_Race.RaceID
+
+relationship Fact_RaceResults_DriverID__Dim_Driver
+	fromColumn: Fact_RaceResults.DriverID
+	toColumn: Dim_Driver.DriverID
+
+relationship Fact_RaceResults_ConstructorID__Dim_Constructor
+	fromColumn: Fact_RaceResults.ConstructorID
+	toColumn: Dim_Constructor.ConstructorID
+
+relationship Fact_LapTimes_RaceID__Dim_Race
+	fromColumn: Fact_LapTimes.RaceID
+	toColumn: Dim_Race.RaceID
+
+relationship Fact_LapTimes_DriverID__Dim_Driver
+	fromColumn: Fact_LapTimes.DriverID
+	toColumn: Dim_Driver.DriverID
+
+relationship Fact_LapTimes_ConstructorID__Dim_Constructor
+	fromColumn: Fact_LapTimes.ConstructorID
+	toColumn: Dim_Constructor.ConstructorID
+
+relationship Fact_Telemetry_RaceID__Dim_Race
+	fromColumn: Fact_Telemetry.RaceID
+	toColumn: Dim_Race.RaceID
+
+relationship Fact_Telemetry_DriverID__Dim_Driver
+	fromColumn: Fact_Telemetry.DriverID
+	toColumn: Dim_Driver.DriverID
+
+relationship Dim_Race_CircuitID__Dim_Circuit
+	fromColumn: Dim_Race.CircuitID
+	toColumn: Dim_Circuit.CircuitID
+
+relationship Fact_VisualFeed_RaceID__Dim_Race
+	fromColumn: Fact_VisualFeed.RaceID
+	toColumn: Dim_Race.RaceID
+
+relationship Fact_VisualFeed_DriverID__Dim_Driver
+	fromColumn: Fact_VisualFeed.DriverID
+	toColumn: Dim_Driver.DriverID
